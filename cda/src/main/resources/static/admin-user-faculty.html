@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Faculty Search</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <style>
+	:root {
+	  --primary-color: #4e4e4e;
+	  --accent-color: #9e9e9e;
+	  --bg-gradient: linear-gradient(135deg, #ececec, #f5f5f5);
+	  --glass-bg: rgba(255, 255, 255, 0.6);
+	  --glass-blur: blur(12px);
+	  --text-dark: #2c2c2c;
+	  --text-muted: #666;
+	  --border-light: #ddd;
+	  --radius: 18px;
+	  --shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+	}
+	
+	/* navbar.css */
+	.custom-navbar {
+	  background-color: #ffffff !important;
+	  border-radius: 12px;
+	  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+	}
+
+	.user-dropdown .btn-outline-primary {
+	  border-radius: 8px;
+	}
+
+	.user-dropdown .dropdown-menu {
+	  font-size: 14px;
+	}
+
+
+	body {
+	  background: var(--bg-gradient);
+	  font-family: 'Poppins', sans-serif;
+	  padding-bottom: 60px;
+	  color: var(--text-dark);
+	}
+
+	h2 {
+	  text-align: center;
+	  font-weight: 800;
+	  margin-bottom: 40px;
+	  color: var(--text-dark);
+	  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+	}
+
+	.card {
+	  background: var(--glass-bg);
+	  backdrop-filter: var(--glass-blur);
+	  border-radius: var(--radius);
+	  border: 1px solid var(--border-light);
+	  box-shadow: var(--shadow);
+	  transition: all 0.3s ease;
+	}
+
+	.card:hover {
+	  transform: translateY(-6px);
+	  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
+	}
+
+	.card h5 {
+	  font-weight: 600;
+	  color: var(--text-dark);
+	}
+
+	.card p {
+	  font-size: 15px;
+	  color: var(--text-muted);
+	}
+
+	.form-control,
+	.form-select {
+	  border-radius: 14px;
+	  padding: 12px 18px;
+	  border: 1px solid var(--border-light);
+	  transition: 0.3s ease;
+	  background: #fff;
+	}
+
+	.form-control:focus,
+	.form-select:focus {
+	  border-color: #bbb;
+	  box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.05);
+	}
+
+	.btn {
+	  border-radius: 10px;
+	  font-weight: 500;
+	  padding: 10px 16px;
+	  transition: all 0.3s ease-in-out;
+	}
+
+	.btn-primary {
+	  background: #333;
+	  color: white;
+	  border: none;
+	}
+
+	.btn-primary:hover {
+	  background: #111;
+	}
+
+	.btn-outline-secondary {
+	  border: 1px solid #aaa;
+	  color: #444;
+	}
+
+	.btn-outline-secondary:hover {
+	  background-color: #f0f0f0;
+	}
+
+	.btn-outline-primary,
+	.btn-outline-danger {
+	  border-radius: 10px;
+	}
+
+	.btn-outline-primary:hover {
+	  background-color: #444;
+	  color: #fff;
+	}
+
+	.btn-outline-danger:hover {
+	  background-color: #c0392b;
+	  color: white;
+	}
+
+	.modal-content {
+	  background: rgba(255, 255, 255, 0.95);
+	  border-radius: var(--radius);
+	  backdrop-filter: blur(15px);
+	  box-shadow: var(--shadow);
+	  animation: fadeInUp 0.4s ease;
+	}
+
+	.modal-header h5 {
+	  font-weight: 600;
+	  color: var(--text-dark);
+	}
+
+	@keyframes fadeInUp {
+	  from {
+	    transform: translateY(30px);
+	    opacity: 0;
+	  }
+	  to {
+	    transform: translateY(0);
+	    opacity: 1;
+	  }
+	}
+
+	@media (max-width: 768px) {
+	  h2 {
+	    font-size: 24px;
+	  }
+	  .card {
+	    padding: 1rem;
+	  }
+	}
+
+  </style>
+</head>
+<body>
+	
+	<!-- navbar.html -->
+	<nav class="navbar navbar-expand-lg navbar-light shadow-sm mb-4 px-3 custom-navbar">
+	  <div class="container-fluid">
+	    <a class="navbar-brand fw-bold text-primary" href="#">CollegeConnect</a>
+	    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+	      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+	      <span class="navbar-toggler-icon"></span>
+	    </button>
+
+	    <div class="collapse navbar-collapse" id="navbarNav">
+	      <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="navLinks">
+	        <li class="nav-item"><a class="nav-link" href="admin-profile">Admin Profile</a></li>
+	        <li class="nav-item"><a class="nav-link" href="admin-department">Department</a></li>
+	        <li class="nav-item"><a class="nav-link" href="admin-course">Courses</a></li>
+	        <li class="nav-item"><a class="nav-link" href="admin-user-student">Students</a></li>
+	        <li class="nav-item"><a class="nav-link active" href="admin-user-faculty">Faculty</a></li>
+	        <li class="nav-item"><a class="nav-link" href="admin-user-admin">Admins</a></li>
+	        <li class="nav-item"><a class="nav-link" href="admin-update">Update Profile</a></li>
+	        <li class="nav-item"><a class="nav-link" href="admin-setting">Account Settings</a></li>
+	      </ul>
+
+	      <div class="dropdown user-dropdown">
+	        <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="userDropdown"
+	          data-bs-toggle="dropdown" aria-expanded="false">
+	          <i class="bi bi-person-circle"></i> <span id="adminName">Admin</span>
+	        </button>
+	        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+	          <li><a class="dropdown-item" href="admin-profile">Profile</a></li>
+	          <li><a class="dropdown-item" href="admin-setting">Settings</a></li>
+	          <li><hr class="dropdown-divider" /></li>
+	          <li><a class="dropdown-item" href="#" id="logoutBtnNavbar">Logout</a></li>
+	        </ul>
+	      </div>
+	    </div>
+	  </div>
+	</nav>
+
+	
+<div class="container mt-5">
+  <h2>Search & Discover Faculty</h2>
+  <div class="row mb-3">
+    <div class="col-md-4"><input type="text" id="nameFilter" class="form-control" placeholder="Search by Name" /></div>
+    <div class="col-md-4"><input type="number" id="idFilter" class="form-control" placeholder="Search by ID" /></div>
+    <div class="col-md-4">
+      <select id="branchFilter" class="form-select">
+        <option value="">Filter by Branch</option>
+        <option>Computer Science and Engineering</option>
+        <option>Information Science and Engineering</option>
+        <option>Electronics and Communication Engineering</option>
+        <option>Mechanical Engineering</option>
+      </select>
+    </div>
+  </div>
+  <div class="row mb-4">
+    <div class="col text-end">
+      <button id="resetBtn" class="btn btn-outline-secondary me-2"><i class="bi bi-arrow-clockwise"></i> Reset</button>
+      <button id="searchBtn" class="btn btn-primary"><i class="bi bi-search"></i> Search</button>
+    </div>
+  </div>
+  <div class="row" id="facultyList"></div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="editFacultyModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5>Edit Faculty</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="editId">
+        <input type="hidden" id="editDepartmentId">
+        <div class="mb-3"><label>Name</label><input type="text" id="editName" class="form-control"></div>
+        <div class="mb-3"><label>Email</label><input type="email" id="editEmail" class="form-control"></div>
+        <div class="mb-3"><label>Phone</label><input type="text" id="editPhone" class="form-control"></div>
+        <div class="mb-3"><label>Office Hours</label><input type="text" id="editOfficeHours" class="form-control"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button class="btn btn-primary" onclick="saveFacultyEdit()">Save Changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  const facultyList = document.getElementById("facultyList");
+  const nameFilterInput = document.getElementById("nameFilter");
+  const idFilterInput = document.getElementById("idFilter");
+  const branchFilterSelect = document.getElementById("branchFilter");
+  const resetBtn = document.getElementById("resetBtn");
+  const searchBtn = document.getElementById("searchBtn");
+  let allFaculty = [];
+
+  function fetchFaculty() {
+    fetch("http://localhost:8080/api/admin/viewAll-faculty")
+      .then(res => res.json())
+      .then(data => {
+        allFaculty = data.body || [];
+        renderFaculty(allFaculty);
+      });
+  }
+
+  function renderFaculty(data) {
+    facultyList.innerHTML = "";
+    if (data.length === 0) {
+      facultyList.innerHTML = `<p class="text-center text-muted">No faculty found.</p>`;
+      return;
+    }
+    data.forEach(f => {
+      facultyList.innerHTML += `
+        <div class="col-md-6 mb-4">
+          <div class="card p-3">
+            <h5>${f.name}</h5>
+            <p><strong>ID:</strong> ${f.user?.id || f.id}</p>
+            <p><strong>Email:</strong> ${f.email}</p>
+            <p><strong>Phone:</strong> ${f.phone}</p>
+            <p><strong>Branch:</strong> ${f.department?.name || '-'}</p>
+            <p><strong>Office Hours:</strong> ${f.officeHours || '-'}</p>
+            <div class="d-flex gap-2">
+              <button class="btn btn-sm btn-outline-primary" onclick='openFacultyEditModal(${JSON.stringify(f)})'><i class="bi bi-pencil-square"></i> Edit</button>
+              <button class="btn btn-sm btn-outline-danger" onclick="deleteFaculty(${f.user?.id || f.id})"><i class="bi bi-trash"></i> Delete</button>
+            </div>
+          </div>
+        </div>`;
+    });
+  }
+
+  function openFacultyEditModal(f) {
+    document.getElementById("editId").value = f.user?.id || f.id;
+    document.getElementById("editName").value = f.name;
+    document.getElementById("editEmail").value = f.email;
+    document.getElementById("editPhone").value = f.phone;
+    document.getElementById("editDepartmentId").value = f.department?.id || 1;
+    document.getElementById("editOfficeHours").value = f.officeHours || "";
+    new bootstrap.Modal(document.getElementById("editFacultyModal")).show();
+  }
+
+  function saveFacultyEdit() {
+    const userId = parseInt(document.getElementById("editId").value);
+    const name = document.getElementById("editName").value;
+    const email = document.getElementById("editEmail").value;
+    const phone = document.getElementById("editPhone").value;
+    const departmentId = parseInt(document.getElementById("editDepartmentId").value);
+    const officeHours = document.getElementById("editOfficeHours").value;
+
+    const payload = {
+      user: { id: userId },
+      name,
+      email,
+      phone,
+      officeHours,
+      department: { id: departmentId }
+    };
+
+    fetch("http://localhost:8080/api/admin/update-faculty", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    })
+      .then(res => res.json())
+      .then(() => {
+        bootstrap.Modal.getInstance(document.getElementById("editFacultyModal")).hide();
+        fetchFaculty();
+      })
+      .catch(err => {
+        console.error("Error updating:", err);
+        alert("Update failed.");
+      });
+  }
+
+  // navbar.js
+  function setupNavbar() {
+    const data = sessionStorage.getItem('loginResponse');
+    const adminNameSpan = document.getElementById('adminName');
+
+    if (data) {
+      try {
+        const parsed = JSON.parse(data);
+        const profile = parsed?.body?.profile;
+        if (profile?.name) adminNameSpan.textContent = profile.name;
+      } catch (e) {
+        console.error("Failed to parse login data.");
+      }
+    }
+
+    const logout = () => {
+      sessionStorage.removeItem('loginResponse');
+      window.location.href = 'login';
+    };
+
+    document.getElementById('logoutBtnNavbar')?.addEventListener('click', logout);
+
+    const navLinks = document.querySelectorAll("#navLinks .nav-link");
+    const currentPath = location.pathname.split("/").pop();
+
+    navLinks.forEach(link => {
+      if (link.getAttribute("href") === currentPath) {
+        link.classList.add("active");
+      }
+
+      link.addEventListener('click', () => {
+        navLinks.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+      });
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", setupNavbar);
+
+  
+  function deleteFaculty(id) {
+    if (!confirm("Are you sure you want to delete this faculty?")) return;
+    fetch(`http://localhost:8080/api/admin/delete-faculty/${id}`, {
+      method: "DELETE"
+    }).then(() => fetchFaculty());
+  }
+
+  function filterFaculty() {
+    const name = nameFilterInput.value.trim().toLowerCase();
+    const id = idFilterInput.value.trim();
+    const branch = branchFilterSelect.value;
+
+    let filtered = allFaculty;
+    if (name) filtered = filtered.filter(f => f.name.toLowerCase().includes(name));
+    if (id) filtered = filtered.filter(f => (f.user?.id || f.id).toString() === id);
+    if (branch) filtered = filtered.filter(f => f.department?.name === branch);
+    renderFaculty(filtered);
+  }
+
+  function resetFilters() {
+    nameFilterInput.value = "";
+    idFilterInput.value = "";
+    branchFilterSelect.value = "";
+    renderFaculty(allFaculty);
+  }
+
+  searchBtn.addEventListener("click", filterFaculty);
+  resetBtn.addEventListener("click", resetFilters);
+  fetchFaculty();
+</script>
+</body>
+</html>

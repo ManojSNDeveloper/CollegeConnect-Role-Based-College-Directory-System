@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Change Password</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+  <style>
+    body {
+		font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #e0eafc, #cfd9df);
+      min-height: 100vh;
+    }
+
+    .password-box {
+      max-width: 420px;
+      margin: 80px auto 40px;
+      padding: 40px 30px;
+      background: #ffffffee;
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgb(0 0 0 / 0.1);
+    }
+
+    h3 {
+      font-weight: 700;
+      color: #1b1b1b;
+      text-align: center;
+      margin-bottom: 25px;
+      text-transform: uppercase;
+      font-size: 1.5rem;
+    }
+
+    .form-control {
+      border-radius: 12px;
+      padding: 12px;
+      font-size: 1rem;
+    }
+
+    .form-control:focus {
+      border-color: #2575fc;
+      box-shadow: 0 0 6px #2575fc99;
+    }
+
+    .btn-custom {
+      background-color: #2575fc;
+      color: white;
+      border-radius: 12px;
+      font-weight: 600;
+      padding: 12px 0;
+      font-size: 1.1rem;
+      border: none;
+      width: 100%;
+    }
+
+    .btn-custom:hover {
+      background-color: #1a56d9;
+    }
+
+    .btn-logout {
+      background-color: #ff4d4d;
+      margin-top: 20px;
+      font-weight: 600;
+      border-radius: 12px;
+      padding: 12px 0;
+      width: 100%;
+      border: none;
+      color: white;
+    }
+
+    .btn-logout:hover {
+      background-color: #cc3a3a;
+    }
+
+    #alertBox {
+      margin-bottom: 15px;
+    }
+
+    nav {
+      background-color: #ffffff !important;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-light shadow-sm px-3">
+    <div class="container-fluid">
+      <a class="navbar-brand fw-bold text-primary" href="#">CollegeConnect</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="navLinks">
+          <li class="nav-item"><a class="nav-link" href="student-profile.html">Student Profile</a></li>
+          <li class="nav-item"><a class="nav-link" href="student-academic.html">Academic</a></li>
+          <li class="nav-item"><a class="nav-link" href="student-search.html">Search Students</a></li>
+          <li class="nav-item"><a class="nav-link" href="student-update.html">Update Profile</a></li>
+          <li class="nav-item"><a class="nav-link" href="student-faculty.html">Faculty-Advisors</a></li>
+          <li class="nav-item"><a class="nav-link active" href="student-setting.html">Account Settings</a></li>
+        </ul>
+
+         
+      </div>
+    </div>
+  </nav>
+
+  <!-- Password Change Section -->
+  <div class="password-box">
+    <h3>Change Password</h3>
+    <div id="alertBox"></div>
+
+    <form id="changePasswordForm" autocomplete="off">
+      <div class="mb-3">
+        <label for="currentPassword" class="form-label">Current Password</label>
+        <input type="password" class="form-control" id="currentPassword" required />
+      </div>
+
+      <div class="mb-3">
+        <label for="newPassword" class="form-label">New Password</label>
+        <input type="password" class="form-control" id="newPassword" required />
+      </div>
+
+      <div class="mb-3">
+        <label for="confirmPassword" class="form-label">Confirm New Password</label>
+        <input type="password" class="form-control" id="confirmPassword" required />
+      </div>
+
+      <button type="submit" class="btn btn-custom">Update Password</button>
+    </form>
+
+    <button class="btn-logout" id="logoutBtnPage">Logout</button>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    // Navbar name and logout
+    document.getElementById("studentName").textContent =
+      sessionStorage.getItem("studentName") || "User";
+
+    document.getElementById("logoutBtnNavbar").addEventListener("click", function (e) {
+      e.preventDefault();
+      sessionStorage.clear();
+      window.location.href = "login.html";
+    });
+
+    document.getElementById("logoutBtnPage").addEventListener("click", function () {
+      sessionStorage.clear();
+      window.location.href = "login.html";
+    });
+
+    document.getElementById("changePasswordForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const loginData = JSON.parse(sessionStorage.getItem("loginResponse"));
+      const userId = loginData?.body?.profile?.user?.id;
+
+      if (!userId) {
+        showAlert("User ID not found. Please log in again.", "danger");
+        return;
+      }
+
+      const currentPassword = document.getElementById("currentPassword").value.trim();
+      const newPassword = document.getElementById("newPassword").value.trim();
+      const confirmPassword = document.getElementById("confirmPassword").value.trim();
+
+      if (newPassword !== confirmPassword) {
+        showAlert("New passwords do not match!", "danger");
+        return;
+      }
+
+      try {
+        const response = await fetch(
+          `http://localhost:8080/users/change-password/${userId}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              oldPassword: currentPassword,
+              newPassword: newPassword,
+            }),
+          }
+        );
+
+        const data = await response.text();
+        if (response.ok) {
+          showAlert(data || "Password updated successfully!", "success");
+          document.getElementById("changePasswordForm").reset();
+        } else {
+          showAlert(data || "Password change failed!", "danger");
+        }
+      } catch (error) {
+        showAlert("Error: " + error.message, "danger");
+      }
+    });
+
+    function showAlert(message, type) {
+      document.getElementById("alertBox").innerHTML = `
+        <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+          ${message}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>`;
+    }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

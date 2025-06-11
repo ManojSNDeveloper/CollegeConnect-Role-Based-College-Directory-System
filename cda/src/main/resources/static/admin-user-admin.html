@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>View All Admins</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #4e4e4e;
+      --accent-color: #9e9e9e;
+      --bg-gradient: linear-gradient(135deg, #ececec, #f5f5f5);
+      --glass-bg: rgba(255, 255, 255, 0.6);
+      --glass-blur: blur(12px);
+      --text-dark: #2c2c2c;
+      --text-muted: #666;
+      --border-light: #ddd;
+      --radius: 18px;
+      --shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+    }
+	
+	/* navbar.css */
+	.custom-navbar {
+	  background-color: #ffffff !important;
+	  border-radius: 12px;
+	  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+	}
+
+	.user-dropdown .btn-outline-primary {
+	  border-radius: 8px;
+	}
+
+	.user-dropdown .dropdown-menu {
+	  font-size: 14px;
+	}
+
+
+    body {
+      background: var(--bg-gradient);
+      font-family: 'Poppins', sans-serif;
+      padding-bottom: 60px;
+      color: var(--text-dark);
+    }
+
+    h2 {
+      text-align: center;
+      font-weight: 800;
+      margin-bottom: 40px;
+      color: var(--text-dark);
+    }
+
+    .card {
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      border-radius: var(--radius);
+      border: 1px solid var(--border-light);
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .form-control {
+      border-radius: 12px;
+      padding: 12px 18px;
+      border: 1px solid var(--border-light);
+    }
+
+    .btn {
+      border-radius: 10px;
+      padding: 10px 16px;
+      font-weight: 500;
+    }
+
+    .btn-primary {
+      background: #333;
+      color: white;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background: #111;
+    }
+
+    .btn-outline-secondary:hover {
+      background-color: #eee;
+    }
+
+    .card h5 {
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+
+    .card p {
+      font-size: 15px;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+	<!-- navbar.html -->
+	<nav class="navbar navbar-expand-lg navbar-light shadow-sm mb-4 px-3 custom-navbar">
+	  <div class="container-fluid">
+	    <a class="navbar-brand fw-bold text-primary" href="#">CollegeConnect</a>
+	    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+	      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+	      <span class="navbar-toggler-icon"></span>
+	    </button>
+
+	    <div class="collapse navbar-collapse" id="navbarNav">
+	      <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="navLinks">
+	        <li class="nav-item"><a class="nav-link" href="admin-profile">Admin Profile</a></li>
+	        <li class="nav-item"><a class="nav-link" href="admin-department">Department</a></li>
+	        <li class="nav-item"><a class="nav-link" href="admin-course">Courses</a></li>
+	        <li class="nav-item"><a class="nav-link" href="admin-user-student">Students</a></li>
+	        <li class="nav-item"><a class="nav-link" href="admin-user-faculty">Faculty</a></li>
+	        <li class="nav-item"><a class="nav-link active" href="admin-user-admin">Admins</a></li>
+	        <li class="nav-item"><a class="nav-link" href="admin-update">Update Profile</a></li>
+	        <li class="nav-item"><a class="nav-link" href="admin-setting">Account Settings</a></li>
+	      </ul>
+
+	      <div class="dropdown user-dropdown">
+	        <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="userDropdown"
+	          data-bs-toggle="dropdown" aria-expanded="false">
+	          <i class="bi bi-person-circle"></i> <span id="adminName">Admin</span>
+	        </button>
+	        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+	          <li><a class="dropdown-item" href="admin-profile">Profile</a></li>
+	          <li><a class="dropdown-item" href="admin-setting">Settings</a></li>
+	          <li><hr class="dropdown-divider" /></li>
+	          <li><a class="dropdown-item" href="#" id="logoutBtnNavbar">Logout</a></li>
+	        </ul>
+	      </div>
+	    </div>
+	  </div>
+	</nav>
+
+  <div class="container mt-5">
+    <h2>All Admins</h2>
+
+    <div class="row mb-4">
+      <div class="col-md-6">
+        <input type="number" id="adminIdInput" class="form-control" placeholder="Search by Admin ID" />
+      </div>
+      <div class="col-md-6 text-end">
+        <button class="btn btn-outline-secondary me-2" onclick="resetSearch()">
+          <i class="bi bi-arrow-clockwise"></i> Reset
+        </button>
+        <button class="btn btn-primary" onclick="searchAdminById()">
+          <i class="bi bi-search"></i> Search
+        </button>
+      </div>
+    </div>
+
+    <div class="row" id="adminList"></div>
+  </div>
+
+  <script>
+    const adminList = document.getElementById("adminList");
+
+    function fetchAllAdmins() {
+      fetch("http://localhost:8080/api/admin/viewAll-admin")
+        .then(res => res.json())
+        .then(data => renderAdmins(data.body || []))
+        .catch(err => console.error("Error loading admins:", err));
+    }
+	
+	// navbar.js
+	function setupNavbar() {
+	  const data = sessionStorage.getItem('loginResponse');
+	  const adminNameSpan = document.getElementById('adminName');
+
+	  if (data) {
+	    try {
+	      const parsed = JSON.parse(data);
+	      const profile = parsed?.body?.profile;
+	      if (profile?.name) adminNameSpan.textContent = profile.name;
+	    } catch (e) {
+	      console.error("Failed to parse login data.");
+	    }
+	  }
+
+	  const logout = () => {
+	    sessionStorage.removeItem('loginResponse');
+	    window.location.href = 'login.html';
+	  };
+
+	  document.getElementById('logoutBtnNavbar')?.addEventListener('click', logout);
+
+	  const navLinks = document.querySelectorAll("#navLinks .nav-link");
+	  const currentPath = location.pathname.split("/").pop();
+
+	  navLinks.forEach(link => {
+	    if (link.getAttribute("href") === currentPath) {
+	      link.classList.add("active");
+	    }
+
+	    link.addEventListener('click', () => {
+	      navLinks.forEach(l => l.classList.remove('active'));
+	      link.classList.add('active');
+	    });
+	  });
+	}
+
+	document.addEventListener("DOMContentLoaded", setupNavbar);
+
+
+    function searchAdminById() {
+      const id = document.getElementById("adminIdInput").value.trim();
+      if (!id) return alert("Please enter an Admin ID");
+
+      fetch(`http://localhost:8080/api/admin/viewAdmin-byId/${id}`)
+        .then(res => res.json())
+        .then(data => {
+          if (!data.body) return renderAdmins([]);
+          renderAdmins([data.body]);
+        })
+        .catch(err => {
+          console.error("Search failed:", err);
+          renderAdmins([]);
+        });
+    }
+
+    function resetSearch() {
+      document.getElementById("adminIdInput").value = "";
+      fetchAllAdmins();
+    }
+
+    function renderAdmins(admins) {
+      adminList.innerHTML = "";
+
+      if (admins.length === 0) {
+        adminList.innerHTML = `<p class="text-center text-muted">No admin found.</p>`;
+        return;
+      }
+
+      admins.forEach(a => {
+        adminList.innerHTML += `
+          <div class="col-md-6 mb-4">
+            <div class="card p-3">
+              <h5>${a.name}</h5>
+              <p><strong>ID:</strong> ${a.user?.id || a.id}</p>
+              <p><strong>Username:</strong> ${a.user?.username}</p>
+              <p><strong>Email:</strong> ${a.contactEmail}</p>
+              <p><strong>Phone:</strong> ${a.phone}</p>
+              <p><strong>Department:</strong> ${a.department?.name || '-'}</p>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    // Load all on page load
+    fetchAllAdmins();
+  </script>
+</body>
+</html>

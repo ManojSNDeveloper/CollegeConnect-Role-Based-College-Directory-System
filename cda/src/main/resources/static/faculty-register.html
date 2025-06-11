@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Faculty Registration</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+
+  <!-- Remix Icon -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet" />
+
+  <style>
+    body {
+      background: linear-gradient(135deg, #e9f7ff, #cdefff);
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .registration-wrapper {
+      background: white;
+      padding: 40px 30px;
+      border-radius: 20px;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .logo {
+      width: 80px;
+      height: 80px;
+      background: url('https://cdn-icons-png.flaticon.com/512/2991/2991108.png') no-repeat center center;
+      background-size: contain;
+      margin: 0 auto 20px;
+      filter: drop-shadow(0 2px 5px rgba(0,0,0,0.2));
+    }
+
+    h2 {
+      text-align: center;
+      font-weight: 700;
+      margin-bottom: 30px;
+      color: #003366;
+    }
+
+    .form-group-icon {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .form-group-icon input,
+    .form-group-icon select {
+      padding-left: 45px;
+    }
+
+    .form-group-icon i {
+      position: absolute;
+      top: 50%;
+      left: 15px;
+      transform: translateY(-50%);
+      font-size: 20px;
+      color: #6c757d;
+    }
+
+    label.form-label {
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 6px;
+    }
+
+    .form-control,
+    .form-select {
+      border-radius: 10px;
+      border: 1.5px solid #ced4da;
+      transition: 0.3s;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+      border-color: #1a73e8;
+      box-shadow: 0 0 8px rgba(26, 115, 232, 0.3);
+    }
+
+    .btn-register {
+      width: 100%;
+      background: linear-gradient(90deg, #1a73e8, #4285f4);
+      border: none;
+      padding: 12px;
+      font-weight: 600;
+      color: white;
+      border-radius: 50px;
+      transition: 0.3s;
+    }
+
+    .btn-register:hover {
+      background: linear-gradient(90deg, #0056d2, #1a73e8);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(26, 115, 232, 0.3);
+    }
+
+    #msgBox {
+      min-height: 40px;
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="registration-wrapper">
+    <div class="logo"></div>
+    <h2>Faculty Registration</h2>
+
+    <form id="facultyForm" novalidate>
+      <div id="msgBox"></div>
+
+      <div class="form-group-icon">
+        <i class="ri-user-line"></i>
+        <label class="form-label" for="username">Username</label>
+        <input type="text" id="username" class="form-control" required />
+      </div>
+
+      <div class="form-group-icon">
+        <i class="ri-lock-line"></i>
+        <label class="form-label" for="password">Password</label>
+        <input type="password" id="password" class="form-control" required />
+      </div>
+
+      <div class="form-group-icon">
+        <i class="ri-profile-line"></i>
+        <label class="form-label" for="name">Full Name</label>
+        <input type="text" id="name" class="form-control" required />
+      </div>
+
+      <div class="form-group-icon">
+        <i class="ri-mail-line"></i>
+        <label class="form-label" for="email">Email</label>
+        <input type="email" id="email" class="form-control" required />
+      </div>
+
+      <div class="form-group-icon">
+        <i class="ri-phone-line"></i>
+        <label class="form-label" for="phone">Phone</label>
+        <input type="tel" id="phone" class="form-control" required />
+      </div>
+
+      <div class="form-group-icon">
+        <i class="ri-building-line"></i>
+        <label class="form-label" for="department">Department</label>
+        <select id="department" class="form-select" required></select>
+      </div>
+
+      <div class="form-group-icon">
+        <i class="ri-time-line"></i>
+        <label class="form-label" for="officeHours">Office Hours</label>
+        <input type="text" id="officeHours" class="form-control" required placeholder="e.g., Mon-Fri 10AM - 1PM" />
+      </div>
+
+      <button type="submit" class="btn btn-register">Register Faculty</button>
+    </form>
+  </div>
+
+  <script>
+    const deptSelect = document.getElementById("department");
+    const msgBox = document.getElementById("msgBox");
+
+    async function fetchDepartments() {
+      try {
+        const res = await fetch("http://localhost:8080/dept");
+        if (!res.ok) throw new Error("Failed to load departments");
+        const data = await res.json();
+        deptSelect.innerHTML = '<option value="" disabled selected>Select department</option>';
+        data.body.forEach(d => {
+          const opt = document.createElement("option");
+          opt.value = d.id;
+          opt.textContent = d.name;
+          deptSelect.appendChild(opt);
+        });
+      } catch (err) {
+        msgBox.innerHTML = `<div class="alert alert-danger">⚠️ ${err.message}</div>`;
+      }
+    }
+
+    fetchDepartments();
+
+    document.getElementById("facultyForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+      msgBox.innerHTML = "";
+
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const deptId = deptSelect.value;
+      const officeHours = document.getElementById("officeHours").value.trim();
+
+      try {
+        const userRes = await fetch("http://localhost:8080/users", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, password, role: "FACULTY" })
+        });
+
+        const userData = await userRes.json();
+        if (!userRes.ok) throw new Error(userData.message || "User creation failed");
+
+        const userId = userData.body.id;
+
+        const facultyRes = await fetch("http://localhost:8080/faculty", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            user: { id: userId },
+            name,
+            email,
+            phone,
+            officeHours,
+            department: { id: parseInt(deptId) }
+          })
+        });
+
+        const facultyData = await facultyRes.json();
+        if (!facultyRes.ok) throw new Error(facultyData.message || "Faculty registration failed");
+
+        msgBox.innerHTML = `<div class="alert alert-success">✅ Faculty registered successfully!</div>`;
+        setTimeout(() => window.location.href = "faculty-login.html", 2000);
+      } catch (err) {
+        msgBox.innerHTML = `<div class="alert alert-danger">❌ ${err.message}</div>`;
+      }
+    });
+  </script>
+</body>
+</html>

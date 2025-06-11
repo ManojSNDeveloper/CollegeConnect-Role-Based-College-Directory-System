@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Faculty Advisors</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+  <style>
+    body {
+      font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f6f9;
+    }
+
+    h2 {
+      font-weight: 600;
+      color: #343a40;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .card {
+      background: #ffffff;
+      border: none;
+      border-radius: 16px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .card h5 {
+      font-weight: 600;
+      color: #007bff;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      margin: 4px 0;
+      font-size: 15px;
+    }
+
+    .container {
+      padding: 20px 10px;
+    }
+
+    @media (max-width: 576px) {
+      .card {
+        margin-bottom: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-light shadow-sm mb-4 px-3" style="background-color: #ffffff;">
+    <div class="container-fluid">
+      <a class="navbar-brand fw-bold text-primary" href="#">CollegeConnect</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="navLinks">
+          <li class="nav-item"><a class="nav-link" href="student-profile">Student Profile</a></li>
+          <li class="nav-item"><a class="nav-link" href="student-academic">Academic</a></li>
+          <li class="nav-item"><a class="nav-link" href="student-search">Search Students</a></li>
+          <li class="nav-item"><a class="nav-link" href="student-update">Update Profile</a></li>
+          <li class="nav-item"><a class="nav-link active" href="student-faculty.">Faculty-Advisors</a></li>
+          <li class="nav-item"><a class="nav-link" href="student-setting">Account Settings</a></li>
+        </ul>
+
+        <!-- User dropdown -->
+        <div class="dropdown user-dropdown">
+          <button
+            class="btn btn-outline-primary dropdown-toggle btn-sm"
+            type="button"
+            id="userDropdown"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <i class="bi bi-person-circle"></i> <span id="studentName">User</span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+            <li><a class="dropdown-item" href="student-profile">Profile</a></li>
+            <li><a class="dropdown-item" href="student-setting">Settings</a></li>
+            <li><hr class="dropdown-divider" /></li>
+            <li><a class="dropdown-item" href="#" id="logoutBtnNavbar">Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Faculty Advisors Section -->
+  <div class="container">
+    <h2>Faculty Advisors</h2>
+    <div id="advisorList" class="row row-cols-1 row-cols-md-2 g-4 mt-3"></div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const advisorList = document.getElementById("advisorList");
+      const loginData = JSON.parse(sessionStorage.getItem("loginResponse"));
+      const studentProfile = loginData?.body?.profile;
+
+      if (studentProfile?.name) {
+        document.getElementById("studentName").textContent = studentProfile.name;
+      }
+
+      document.getElementById("logoutBtnNavbar").addEventListener("click", () => {
+        sessionStorage.clear();
+        window.location.href = "login";
+      });
+
+      function loadFacultyAdvisors() {
+        fetch("http://localhost:8080/api/students/search-faculty-advisors")
+          .then(res => res.json())
+          .then(data => renderAdvisors(data.body))
+          .catch(() => showError());
+      }
+
+      function renderAdvisors(advisors) {
+        advisorList.innerHTML = "";
+
+        if (!advisors || advisors.length === 0) {
+          advisorList.innerHTML = `<p class="text-danger">No faculty advisors found.</p>`;
+          return;
+        }
+
+        advisors.forEach(advisor => {
+          const card = `
+            <div class="col">
+              <div class="card shadow rounded p-4">
+                <h5>${advisor.name}</h5>
+                <p><strong>Department:</strong> ${advisor.department.name}</p>
+                <p><strong>Email:</strong> ${advisor.email}</p>
+                <p><strong>Phone:</strong> ${advisor.phone}</p>
+              </div>
+            </div>
+          `;
+          advisorList.innerHTML += card;
+        });
+      }
+
+      function showError() {
+        advisorList.innerHTML = `<p class="text-danger">Failed to load faculty advisor data.</p>`;
+      }
+
+      loadFacultyAdvisors();
+    });
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

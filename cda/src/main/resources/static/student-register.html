@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Student Registration</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+
+  <!-- Remix Icon for form icons -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet" />
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #f6f8fc, #dceeff);
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .registration-wrapper {
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+      border-radius: 20px;
+      max-width: 600px;
+      width: 100%;
+      padding: 40px 30px;
+      position: relative;
+      backdrop-filter: blur(10px);
+    }
+
+    .logo {
+      width: 80px;
+      height: 80px;
+      background: url('https://cdn-icons-png.flaticon.com/512/3135/3135755.png') no-repeat center center;
+      background-size: contain;
+      margin: 0 auto 20px;
+      filter: drop-shadow(0 2px 5px rgba(0,0,0,0.2));
+    }
+
+    h2 {
+      text-align: center;
+      font-weight: 700;
+      font-size: 2rem;
+      margin-bottom: 25px;
+      color: #003366;
+    }
+
+    .form-group-icon {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .form-group-icon input,
+    .form-group-icon select {
+      padding-left: 45px;
+    }
+
+    .form-group-icon i {
+      position: absolute;
+      top: 50%;
+      left: 15px;
+      transform: translateY(-50%);
+      font-size: 20px;
+      color: #6c757d;
+    }
+
+    label.form-label {
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #333;
+    }
+
+    .form-control,
+    .form-select {
+      border-radius: 10px;
+      border: 1.5px solid #ced4da;
+      transition: all 0.3s;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+      border-color: #1a73e8;
+      box-shadow: 0 0 8px rgba(26, 115, 232, 0.3);
+    }
+
+    #courses {
+      height: 140px;
+    }
+
+    .btn-register {
+      width: 100%;
+      background: linear-gradient(90deg, #1a73e8, #4285f4);
+      border: none;
+      padding: 12px;
+      font-weight: 600;
+      color: white;
+      border-radius: 50px;
+      transition: 0.3s;
+      margin-top: 10px;
+    }
+
+    .btn-register:hover {
+      background: linear-gradient(90deg, #0056d2, #1a73e8);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(26, 115, 232, 0.3);
+    }
+
+    #msgBox {
+      min-height: 40px;
+      margin-bottom: 1rem;
+    }
+
+    @media (max-width: 576px) {
+      .registration-wrapper {
+        padding: 30px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="registration-wrapper">
+    <div class="logo"></div>
+    <h2>Student Registration</h2>
+
+    <form id="registrationForm" novalidate>
+      <div id="msgBox"></div>
+
+      <div class="form-group-icon">
+        <i class="ri-user-line"></i>
+        <label for="username" class="form-label">Username</label>
+        <input type="text" id="username" class="form-control" required />
+      </div>
+
+      <div class="form-group-icon">
+        <i class="ri-lock-line"></i>
+        <label for="password" class="form-label">Password</label>
+        <input type="password" id="password" class="form-control" required />
+      </div>
+
+      <div class="form-group-icon">
+        <i class="ri-profile-line"></i>
+        <label for="name" class="form-label">Full Name</label>
+        <input type="text" id="name" class="form-control" required />
+      </div>
+
+      <div class="form-group-icon">
+        <i class="ri-mail-line"></i>
+        <label for="email" class="form-label">Email</label>
+        <input type="email" id="email" class="form-control" required />
+      </div>
+
+      <div class="form-group-icon">
+        <i class="ri-phone-line"></i>
+        <label for="phone" class="form-label">Phone</label>
+        <input type="tel" id="phone" class="form-control" required />
+      </div>
+
+      <div class="form-group-icon">
+        <i class="ri-calendar-line"></i>
+        <label for="year" class="form-label">Year</label>
+        <select id="year" class="form-select" required>
+          <option value="" disabled selected>Select year</option>
+          <option value="1st Year">1st Year</option>
+          <option value="2nd Year">2nd Year</option>
+          <option value="3rd Year">3rd Year</option>
+          <option value="4th Year">4th Year</option>
+        </select>
+      </div>
+
+      <div class="form-group-icon">
+        <i class="ri-building-line"></i>
+        <label for="department" class="form-label">Department</label>
+        <select id="department" class="form-select" required></select>
+      </div>
+
+      <div class="form-group-icon">
+        <i class="ri-book-line"></i>
+        <label for="courses" class="form-label">Courses</label>
+        <select multiple id="courses" class="form-select" required></select>
+      </div>
+
+      <button type="submit" class="btn btn-register">Register Now</button>
+    </form>
+  </div>
+
+  <script>
+    const deptSelect = document.getElementById("department");
+    const coursesSelect = document.getElementById("courses");
+    const msgBox = document.getElementById("msgBox");
+
+    async function fetchDepartments() {
+      try {
+        const res = await fetch("http://localhost:8080/dept");
+        if (!res.ok) throw new Error('Failed to load departments');
+        const data = await res.json();
+        deptSelect.innerHTML = '<option value="" disabled selected>Select department</option>';
+        data.body.forEach(d => {
+          const option = document.createElement('option');
+          option.value = d.id;
+          option.textContent = d.name;
+          deptSelect.appendChild(option);
+        });
+      } catch (err) {
+        msgBox.innerHTML = `<div class="alert alert-danger">⚠️ ${err.message}</div>`;
+      }
+    }
+
+    deptSelect.addEventListener("change", async () => {
+      const selectedDeptText = deptSelect.options[deptSelect.selectedIndex].text;
+      if (!selectedDeptText) return;
+      try {
+        const res = await fetch(`http://localhost:8080/courses/branch/${selectedDeptText}`);
+        if (!res.ok) throw new Error('Failed to load courses');
+        const data = await res.json();
+        coursesSelect.innerHTML = "";
+        data.body.forEach(c => {
+          const option = document.createElement('option');
+          option.value = c.id;
+          option.textContent = c.courseName;
+          coursesSelect.appendChild(option);
+        });
+      } catch (err) {
+        coursesSelect.innerHTML = "";
+        msgBox.innerHTML = `<div class="alert alert-danger">⚠️ ${err.message}</div>`;
+      }
+    });
+
+    fetchDepartments();
+
+    document.getElementById("registrationForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+      msgBox.innerHTML = "";
+
+      if (coursesSelect.selectedOptions.length === 0) {
+        msgBox.innerHTML = `<div class="alert alert-warning">⚠️ Please select at least one course.</div>`;
+        return;
+      }
+
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const year = document.getElementById("year").value;
+      const deptId = deptSelect.value;
+      const selectedCourses = Array.from(coursesSelect.selectedOptions).map(option => ({ id: parseInt(option.value) }));
+
+      try {
+        const userRes = await fetch("http://localhost:8080/users", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, password, role: "STUDENT" })
+        });
+
+        const userData = await userRes.json();
+        if (!userRes.ok) throw new Error(userData.message || "User creation failed");
+        const userId = userData.body.id;
+
+        const studentRes = await fetch("http://localhost:8080/api/students", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            user: { id: userId }, name, email, phone, year,
+            department: { id: parseInt(deptId) }, courses: selectedCourses
+          })
+        });
+
+        const studentData = await studentRes.json();
+        if (!studentRes.ok) throw new Error(studentData.message || "Student registration failed");
+
+        msgBox.innerHTML = `<div class="alert alert-success">🎉 Registered successfully! Redirecting to login...</div>`;
+        setTimeout(() => window.location.href = "student-login", 2000);
+      } catch (err) {
+        msgBox.innerHTML = `<div class="alert alert-danger">❌ ${err.message}</div>`;
+      }
+    });
+  </script>
+</body>
+</html>

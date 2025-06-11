@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Dashboard</title>
+  <style>
+    * {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      display: flex;
+      background-color: #f4f4f4;
+    }
+
+    .sidebar {
+      width: 230px;
+      height: 100vh;
+      background-color: #007bff;
+      color: white;
+      padding: 20px;
+    }
+
+    .sidebar h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .sidebar ul {
+      list-style-type: none;
+    }
+
+    .sidebar ul li {
+      margin: 15px 0;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .sidebar ul li:hover {
+      text-decoration: underline;
+    }
+
+    .main-content {
+      flex-grow: 1;
+      padding: 20px;
+    }
+
+    .header {
+      background-color: #4c00ff;
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header .logout {
+      color: red;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .student-info {
+      background-color: white;
+      padding: 20px;
+      margin-top: 20px;
+      border-radius: 10px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input {
+      padding: 8px;
+      width: 100%;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .student-name {
+      font-weight: bold;
+      font-size: 24px;
+    }
+
+    .details {
+      margin-top: 10px;
+    }
+
+    .details span {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <h2 id="studentName">Name</h2>
+    <ul>
+      <li>👤 Profile</li>
+      <li>📝 Assignments</li>
+      <li>📩 Contact Faculty</li>
+      <li>🎓 Academic Info</li>
+      <li>📚 Courses</li>
+      <li>📊 Results</li>
+    </ul>
+  </div>
+
+  <div class="main-content">
+    <div class="header">
+      <div class="details">
+        <div class="student-name" id="headerName">Name</div>
+        <div><span>Department:</span> <span id="headerDept">-</span></div>
+        <div><span>Year:</span> <span id="headerYear">-</span></div>
+        <div><span>Email:</span> <span id="headerEmail">-</span></div>
+      </div>
+      <a href="login.html" class="logout">🔁 Logout</a>
+    </div>
+
+    <div class="student-info">
+      <h3>Update Profile</h3>
+      <form id="updateForm">
+        <div class="form-group">
+          <label>Name:</label>
+          <input type="text" id="name">
+        </div>
+        <div class="form-group">
+          <label>Department:</label>
+          <input type="text" id="department">
+        </div>
+        <div class="form-group">
+          <label>Year:</label>
+          <input type="text" id="year">
+        </div>
+        <div class="form-group">
+          <label>Email:</label>
+          <input type="email" id="email">
+        </div>
+        <button type="submit">Update</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+	  const user = JSON.parse(localStorage.getItem("loggedInUser"));
+
+	  if (!user) {
+	    alert("You must login first");
+	    window.location.href = "login";
+	  }
+
+	  // Populate UI
+	  document.getElementById("studentName").textContent = user.name;
+	  document.getElementById("headerName").textContent = user.name;
+	  document.getElementById("headerDept").textContent = user.department || "N/A";
+	  document.getElementById("headerYear").textContent = user.year || "N/A";
+	  document.getElementById("headerEmail").textContent = user.email;
+
+	  document.getElementById("name").value = user.name;
+	  document.getElementById("department").value = user.department || "";
+	  document.getElementById("year").value = user.year || "";
+	  document.getElementById("email").value = user.email;
+	</script>
+</body>
+</html>

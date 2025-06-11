@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Faculty Analytics</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #eef2f7, #ffffff);
+      padding: 30px;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 30px;
+      color: #2c3e50;
+    }
+
+    .card-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #007bff;
+    }
+
+    .card-value {
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    .top-student-card {
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      background: #fff;
+    }
+
+    canvas {
+      width: 100% !important;
+      height: 300px !important;
+    }
+
+    @media (max-width: 768px) {
+      canvas {
+        height: 250px !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-light shadow-sm mb-4 px-3">
+    <div class="container-fluid">
+      <a class="navbar-brand fw-bold text-primary" href="#">CollegeConnect</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="navLinks">
+          <li class="nav-item"><a class="nav-link" href="faculty-profile">Faculty Profile</a></li>
+          <li class="nav-item"><a class="nav-link" href="faculty-dashboard">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link" href="faculty-batch">Search Students</a></li>
+          <li class="nav-item"><a class="nav-link" href="faculty-update">Update Profile</a></li>
+          <li class="nav-item"><a class="nav-link" href="faculty-course">Courses</a></li>
+          <li class="nav-item"><a class="nav-link" href="faculty-setting">Account Settings</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Dashboard Content -->
+  <div class="container">
+    <h2 class="section-title">Faculty Dashboard: Student Analytics</h2>
+
+    <div class="row mb-4">
+      <div class="col-md-6 mb-3">
+        <div class="bg-white p-3 rounded shadow-sm">
+          <canvas id="cgpaBarChart"></canvas>
+        </div>
+      </div>
+      <div class="col-md-6 mb-3">
+        <div class="bg-white p-3 rounded shadow-sm">
+          <canvas id="attendancePieChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <h4 class="text-center mb-3 text-success">Top 3 Performers</h4>
+    <div class="row" id="topStudentsContainer"></div>
+  </div>
+
+  <!-- JavaScript Section -->
+  <script>
+    const loginData = JSON.parse(sessionStorage.getItem("loginResponse"));
+    const branch = loginData?.body?.profile?.department?.name;
+    const cgpaPerYear = {};
+    const attendanceRanges = { "0-50": 0, "51-70": 0, "71-90": 0, "91-100": 0 };
+    const topStudents = [];
+
+    const getAttendanceRange = (val) => {
+      if (val <= 50) return "0-50";
+      if (val <= 70) return "51-70";
+      if (val <= 90) return "71-90";
+      return "91-100";
+    };
+
+    const fetchAnalytics = async () => {
+      try {
+        const res = await fetch(`http://localhost:8080/academic/branch/${branch}`);
+        const data = await res.json();
+        const students = data.body || [];
+
+        students.forEach(({ cgpa, attendance, stdProfile }) => {
+          const year = stdProfile.year;
+          const range = getAttendanceRange(attendance);
+          attendanceRanges[range]++;
+
+          if (!cgpaPerYear[year]) cgpaPerYear[year] = [];
+          cgpaPerYear[year].push(cgpa);
+
+          topStudents.push({
+            name: stdProfile.name,
+            cgpa,
+            email: stdProfile.email,
+            phone: stdProfile.phone
+          });
+        });
+
+        renderCGPAChart();
+        renderAttendanceChart();
+        renderTopStudents();
+      } catch (err) {
+        alert("Failed to load analytics data.");
+        console.error(err);
+      }
+    };
+
+    const renderCGPAChart = () => {
+      const labels = Object.keys(cgpaPerYear).sort();
+      const data = labels.map(y => {
+        const total = cgpaPerYear[y].reduce((sum, val) => sum + val, 0);
+        return (total / cgpaPerYear[y].length).toFixed(2);
+      });
+
+      new Chart(document.getElementById("cgpaBarChart"), {
+        type: "bar",
+        data: {
+          labels,
+          datasets: [{
+            label: "Avg CGPA",
+            data,
+            backgroundColor: "#007bff"
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } }
+        }
+      });
+    };
+
+    const renderAttendanceChart = () => {
+      const labels = Object.keys(attendanceRanges);
+      const data = Object.values(attendanceRanges);
+
+      new Chart(document.getElementById("attendancePieChart"), {
+        type: "pie",
+        data: {
+          labels,
+          datasets: [{
+            label: "Attendance Range",
+            data,
+            backgroundColor: ["#dc3545", "#ffc107", "#0dcaf0", "#198754"]
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false
+        }
+      });
+    };
+
+    const renderTopStudents = () => {
+      const container = document.getElementById("topStudentsContainer");
+      const sorted = topStudents.sort((a, b) => b.cgpa - a.cgpa).slice(0, 3);
+
+      sorted.forEach((s, index) => {
+        container.innerHTML += `
+          <div class="col-md-4 mb-3">
+            <div class="card top-student-card p-3">
+              <div class="card-body">
+                <h5 class="card-title text-primary">#${index + 1} - ${s.name}</h5>
+                <p class="card-text"><strong>CGPA:</strong> ${s.cgpa}</p>
+                <p class="card-text"><strong>Email:</strong> ${s.email}</p>
+                <p class="card-text"><strong>Phone:</strong> ${s.phone}</p>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+    };
+
+    fetchAnalytics();
+  </script>
+</body>
+</html>

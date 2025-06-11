@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Analytics</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+	body {
+	  font-family: 'Poppins', sans-serif;
+	  background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+	  color: #2c3e50;
+	  padding: 40px;
+	  overflow-x: hidden;
+	}
+	
+	/* navbar.css */
+	.custom-navbar {
+	  background-color: #ffffff !important;
+	  border-radius: 12px;
+	  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+	}
+
+	.user-dropdown .btn-outline-primary {
+	  border-radius: 8px;
+	}
+
+	.user-dropdown .dropdown-menu {
+	  font-size: 14px;
+	}
+
+
+	h2 {
+	  text-align: center;
+	  font-size: 2.5rem;
+	  font-weight: 800;
+	  margin-bottom: 40px;
+	  background: linear-gradient(to right, #00c6ff, #0072ff);
+	  -webkit-background-clip: text;
+	  -webkit-text-fill-color: transparent;
+	}
+
+	.stat-card {
+	  background: rgba(255, 255, 255, 0.6);
+	  backdrop-filter: blur(12px);
+	  border-radius: 20px;
+	  padding: 30px;
+	  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+	  text-align: center;
+	  transition: all 0.3s ease;
+	  border: 1px solid rgba(200, 200, 200, 0.3);
+	}
+
+	.stat-card:hover {
+	  transform: translateY(-5px);
+	  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+	}
+
+	.stat-value {
+	  font-size: 2.6rem;
+	  font-weight: 700;
+	  color: #0072ff;
+	}
+
+	.stat-label {
+	  font-size: 1.1rem;
+	  margin-top: 8px;
+	  color: #555;
+	}
+
+	.chart-container {
+	  max-width: 900px;
+	  margin: 50px auto;
+	  background: rgba(255, 255, 255, 0.65);
+	  border-radius: 20px;
+	  padding: 30px;
+	  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+	  backdrop-filter: blur(10px);
+	  border: 1px solid rgba(180, 180, 180, 0.2);
+	}
+
+	.chart-container h4 {
+	  text-align: center;
+	  font-weight: 600;
+	  font-size: 1.4rem;
+	  margin-bottom: 20px;
+	  color: #2c3e50;
+	}
+
+	canvas {
+	  width: 100% !important;
+	  height: 400px !important;
+	}
+
+	/* Responsive */
+	@media (max-width: 768px) {
+	  .stat-card {
+	    padding: 20px;
+	  }
+
+	  .stat-value {
+	    font-size: 2rem;
+	  }
+
+	  .chart-container {
+	    padding: 20px;
+	  }
+	}
+
+  </style>
+</head>
+<body>
+
+	<!-- navbar.html -->
+	<nav class="navbar navbar-expand-lg navbar-light shadow-sm mb-4 px-3 custom-navbar">
+	  <div class="container-fluid">
+	    <a class="navbar-brand fw-bold text-primary" href="#">CollegeConnect</a>
+	    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+	      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+	      <span class="navbar-toggler-icon"></span>
+	    </button>
+
+	    <div class="collapse navbar-collapse" id="navbarNav">
+	      <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="navLinks">
+	        <li class="nav-item"><a class="nav-link" href="admin-profile">Admin Profile</a></li>
+	        <li class="nav-item"><a class="nav-link" href="admin-department">Department</a></li>
+	        <li class="nav-item"><a class="nav-link" href="admin-course">Courses</a></li>
+	        <li class="nav-item"><a class="nav-link" href="admin-user-student">Students</a></li>
+	        <li class="nav-item"><a class="nav-link" href="admin-user-faculty">Faculty</a></li>
+	        <li class="nav-item"><a class="nav-link" href="admin-user-admin">Admins</a></li>
+	        <li class="nav-item"><a class="nav-link active" href="admin-dashboard">Dashboard</a></li>
+	        <li class="nav-item"><a class="nav-link" href="admin-update">Update Profile</a></li>
+	        <li class="nav-item"><a class="nav-link" href="admin-setting">Account Settings</a></li>
+	      </ul>
+
+	       
+	    </div>
+	  </div>
+	</nav>
+
+  <h2>📊 Admin Dashboard – Analytics Overview</h2>
+
+  <div class="container mb-5">
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="stat-card">
+          <div id="students" class="stat-value">0</div>
+          <div class="stat-label">Students</div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="stat-card">
+          <div id="faculty" class="stat-value">0</div>
+          <div class="stat-label">Faculty</div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="stat-card">
+          <div id="admins" class="stat-value">0</div>
+          <div class="stat-label">Admins</div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="stat-card">
+          <div id="departments" class="stat-value">0</div>
+          <div class="stat-label">Departments</div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="stat-card">
+          <div id="courses" class="stat-value">0</div>
+          <div class="stat-label">Courses</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-container">
+    <h4 class="text-center">🎯 User Type Distribution</h4>
+    <canvas id="pieChart"></canvas>
+  </div>
+
+  <div class="chart-container">
+    <h4 class="text-center">👨‍🎓 Students per Department</h4>
+    <canvas id="barChart"></canvas>
+  </div>
+
+  <div class="chart-container">
+    <h4 class="text-center">📚 Courses per Department</h4>
+    <canvas id="lineChart"></canvas>
+  </div>
+
+  <script>
+    const animateCount = (el, endValue) => {
+      let start = 0;
+      const duration = 1000;
+      const step = Math.ceil(endValue / (duration / 30));
+      const interval = setInterval(() => {
+        start += step;
+        if (start >= endValue) {
+          start = endValue;
+          clearInterval(interval);
+        }
+        el.textContent = start;
+      }, 30);
+    };
+
+    const fetchAndDisplayAnalytics = async () => {
+      try {
+        const [studentsRes, facultyRes, adminsRes, deptRes, coursesRes] = await Promise.all([
+          fetch("http://localhost:8080/api/admin/viewAll-students"),
+          fetch("http://localhost:8080/api/admin/viewAll-faculty"),
+          fetch("http://localhost:8080/api/admin/viewAll-admin"),
+          fetch("http://localhost:8080/dept"),
+          fetch("http://localhost:8080/courses")
+        ]);
+
+        const students = await studentsRes.json();
+        const faculty = await facultyRes.json();
+        const admins = await adminsRes.json();
+        const departments = await deptRes.json();
+        const courses = await coursesRes.json();
+
+        const studentCount = students.body.length;
+        const facultyCount = faculty.body.length;
+        const adminCount = admins.body.length;
+        const deptCount = departments.body.length;
+        const courseCount = courses.body.length;
+
+        animateCount(document.getElementById("students"), studentCount);
+        animateCount(document.getElementById("faculty"), facultyCount);
+        animateCount(document.getElementById("admins"), adminCount);
+        animateCount(document.getElementById("departments"), deptCount);
+        animateCount(document.getElementById("courses"), courseCount);
+
+        // Pie Chart
+        new Chart(document.getElementById("pieChart"), {
+          type: "pie",
+          data: {
+            labels: ["Students", "Faculty", "Admins"],
+            datasets: [{
+              label: "Users",
+              data: [studentCount, facultyCount, adminCount],
+              backgroundColor: ["#007bff", "#28a745", "#ffc107"]
+            }]
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                position: 'bottom'
+              }
+            }
+          }
+        });
+		
+		
+
+        // Dynamic Department Analytics
+        const branches = departments.body.map(dept => dept.name);
+        const studentPerBranch = [];
+        const coursePerBranch = [];
+
+        for (const branch of branches) {
+          const stdRes = await fetch(`http://localhost:8080/api/admin/branch/${branch}`);
+          const stdData = await stdRes.json();
+          studentPerBranch.push(stdData.body.length);
+
+          const crsRes = await fetch(`http://localhost:8080/courses/branch/${branch}`);
+          const crsData = await crsRes.json();
+          coursePerBranch.push(crsData.body.length);
+        }
+
+        // Bar Chart - Students
+        new Chart(document.getElementById("barChart"), {
+          type: "bar",
+          data: {
+            labels: branches,
+            datasets: [{
+              label: "Students",
+              data: studentPerBranch,
+              backgroundColor: "#007bff"
+            }]
+          },
+          options: {
+            responsive: true,
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+
+        // Line Chart - Courses
+        new Chart(document.getElementById("lineChart"), {
+          type: "line",
+          data: {
+            labels: branches,
+            datasets: [{
+              label: "Courses",
+              data: coursePerBranch,
+              borderColor: "#28a745",
+              fill: false,
+              tension: 0.4
+            }]
+          },
+          options: {
+            responsive: true,
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+
+      } catch (error) {
+        alert("Failed to fetch analytics data");
+        console.error(error);
+      }
+    };
+
+    fetchAndDisplayAnalytics();
+  </script>
+</body>
+</html>

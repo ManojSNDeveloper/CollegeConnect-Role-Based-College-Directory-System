@@ -1,0 +1,251 @@
+* {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+	flex-direction: column;
+}
+
+    /* Navbar */
+    .navbar {
+      background-color: #3b0ad2;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 40px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .navbar .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar .logo img {
+      height: 40px;
+      margin-right: 10px;
+    }
+
+    .navbar .menu a {
+      color: white;
+      margin-left: 25px;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .navbar .menu a:hover {
+      text-decoration: underline;
+    }
+    
+
+    /* Hero Section */
+    .hero {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 80px 30px;
+      margin-top: 40px; /* Slightly above center */
+    }
+
+    .hero .left {
+      max-width: 50%;
+    }
+
+    .hero h1 {
+      font-size: 36px;
+      color: #3b0ad2;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: #444;
+      margin-bottom: 30px;
+    }
+
+    .hero button {
+      background-color: #3b0ad2;
+      color: white;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+    }
+
+    .hero button:hover {
+      background-color: #2909a5;
+    }
+
+    .hero .right img {
+      width: 400px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      margin-left: 40px;
+    }
+	
+	.dept-card {
+	     width: 300px;
+	     background: #fff;
+	     border-radius: 12px;
+	     padding: 25px;
+	     text-align: center;
+	     box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+	     transition: transform 0.2s ease;
+	   }
+	 
+	   .dept-card img {
+	     width: 60px;
+	     height: 60px;
+	     margin-bottom: 20px;
+	   }
+	 
+	   .dept-card h3 {
+	     color: #3b0ad2;
+	     font-size: 18px;
+	     margin-bottom: 10px;
+	   }
+	 
+	   .dept-card p {
+	     font-size: 14px;
+	     color: #555;
+	     margin-bottom: 20px;
+	   }
+	 
+	   .dept-card button {
+	     background-color: #3b0ad2;
+	     color: white;
+	     padding: 8px 16px;
+	     border: none;
+	     border-radius: 6px;
+	     cursor: pointer;
+	   }
+	 
+	   .dept-card button:hover {
+	     background-color: #2909a5;
+	   }
+	 
+	   .dept-card:hover {
+	     transform: translateY(-5px);
+	   }
+	   
+	   
+	   .faculty-card {
+	         width: 300px;
+	         background: #fff;
+	         border-radius: 12px;
+	padding: 25px;
+	text-align: center;
+	box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+	transition: transform 0.2s ease;
+	       }
+	     
+	       .faculty-card img {
+	         width: 100px;
+	         height: 100px;
+	         border-radius: 50%;
+	         margin-bottom: 20px;
+	         object-fit: cover;
+	       }
+	     
+	       .faculty-card h3 {
+	         color: #3b0ad2;
+	         font-size: 18px;
+	         margin-bottom: 5px;
+	       }
+	     
+	       .faculty-card h4 {
+	         font-size: 15px;
+	         color: #333;
+	         margin-bottom: 10px;
+	       }
+	     
+	       .faculty-card p {
+	         font-size: 14px;
+	         color: #555;
+	       }
+	     
+	       .faculty-card:hover {
+	         transform: translateY(-5px);
+	       }
+		   
+		   .course-card {
+		         width: 300px;
+		         background: #fff;
+		         border-radius: 12px;
+		         padding: 25px;
+		         text-align: center;
+		         box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+		         transition: transform 0.2s ease;
+		       }
+		     
+		       .course-card h3 {
+		         color: #3b0ad2;
+		         font-size: 20px;
+		         margin-bottom: 10px;
+		       }
+		     
+		       .course-card p {
+		         font-size: 14px;
+		         color: #555;
+		         margin-bottom: 20px;
+		       }
+		     
+		       .course-card button {
+		         background-color: #3b0ad2;
+		         color: #fff;
+		         padding: 10px 18px;
+		         border: none;
+		         border-radius: 5px;
+		         cursor: pointer;
+		       }
+		     
+		       .course-card button:hover {
+		         background-color: #260aa3;
+		       }
+		     
+		       .course-card:hover {
+		         transform: translateY(-5px);
+		       }
+			   
+			   .campus-img {
+			         width: 250px;
+			         height: 180px;
+			         border-radius: 20px;
+			         object-fit: cover;
+			         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+			       }
+			     
+			       .campus-card {
+			         width: 260px;
+			         background: #fff;
+			         border-radius: 12px;
+			         padding: 20px;
+			         text-align: center;
+			         box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+			         transition: transform 0.2s ease;
+			       }
+			     
+			       .campus-card h3 {
+			         color: #3b0ad2;
+			         font-size: 18px;
+			         margin-bottom: 10px;
+			       }
+			     
+			       .campus-card p {
+			         font-size: 14px;
+			         color: #555;
+			       }
+			     
+			       .campus-card:hover {
+			         transform: translateY(-5px);
+			       }

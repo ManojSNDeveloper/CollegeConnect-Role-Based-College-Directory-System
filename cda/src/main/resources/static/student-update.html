@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Update Student Profile</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <style>
+	:root {
+	  --primary-color: #00695c;
+	  --accent-color: #009688;
+	  --bg-gradient: linear-gradient(135deg, #e0f7fa, #ffffff);
+	  --card-bg: #ffffff;
+	  --input-bg: #f4f6f8;
+	  --input-border: #cfd8dc;
+	  --text-dark: #263238;
+	  --text-muted: #607d8b;
+	  --shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+	  --radius: 12px;
+	  --transition: all 0.3s ease;
+	}
+
+	* {
+	  box-sizing: border-box;
+	}
+
+	body {
+		font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+		  padding-top: 80px; /* ensure it's equal or more than navbar height */
+	  min-height: 100vh;
+	  background: var(--bg-gradient);
+	  padding-top: 80px;
+	  padding-bottom: 30px;
+	  color: var(--text-dark);
+	}
+
+	.navbar-custom {
+	  background-color: var(--primary-color);
+	}
+
+	.navbar-custom .navbar-brand,
+	.navbar-custom .nav-link,
+	.navbar-custom .dropdown-item {
+	  color: #fff !important;
+	  font-weight: 500;
+	}
+
+	.navbar-custom .nav-link:hover,
+	.navbar-custom .dropdown-item:hover {
+	  color: #e0f2f1 !important;
+	}
+
+	.update-card {
+	  background: var(--card-bg);
+	  padding: 40px;
+	  border-radius: var(--radius);
+	  box-shadow: var(--shadow);
+	  max-width: 750px;
+	  margin: auto;
+	  animation: fadeIn 0.6s ease-in-out;
+	  transition: var(--transition);
+	}
+
+	.update-card:hover {
+	  transform: translateY(-4px);
+	  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+	}
+
+	h2.title {
+	  font-size: 2rem;
+	  font-weight: 700;
+	  color: var(--primary-color);
+	  text-align: center;
+	  margin-bottom: 30px;
+	}
+
+	.form-label {
+	  font-weight: 600;
+	  color: var(--text-dark);
+	}
+
+	.form-control,
+	.form-select {
+	  background: var(--input-bg);
+	  border: 1px solid var(--input-border);
+	  border-radius: var(--radius);
+	  padding: 12px 16px;
+	  font-size: 1rem;
+	  color: var(--text-dark);
+	  transition: var(--transition);
+	}
+
+	.form-control:focus,
+	.form-select:focus {
+	  border-color: var(--accent-color);
+	  box-shadow: 0 0 0 4px rgba(0, 150, 136, 0.1);
+	  background-color: #fff;
+	  outline: none;
+	}
+
+	.btn-custom {
+	  background: var(--primary-color);
+	  color: #fff;
+	  border: none;
+	  padding: 14px;
+	  font-size: 1rem;
+	  font-weight: 600;
+	  border-radius: var(--radius);
+	  cursor: pointer;
+	  transition: var(--transition);
+	  box-shadow: 0 4px 12px rgba(0, 105, 92, 0.25);
+	}
+
+	.btn-custom:hover {
+	  background: var(--accent-color);
+	  box-shadow: 0 6px 18px rgba(0, 150, 136, 0.3);
+	}
+
+	@keyframes fadeIn {
+	  from {
+	    opacity: 0;
+	    transform: translateY(30px);
+	  }
+	  to {
+	    opacity: 1;
+	    transform: translateY(0);
+	  }
+	}
+
+	/* Responsive tweaks */
+	@media (max-width: 576px) {
+	  .update-card {
+	    padding: 25px 20px;
+	  }
+
+	  h2.title {
+	    font-size: 1.5rem;
+	  }
+
+	  .btn-custom {
+	    padding: 12px;
+	    font-size: 0.95rem;
+	  }
+	}
+
+  </style>
+</head>
+<body>
+
+	<nav class="navbar navbar-expand-lg navbar-light fixed-top shadow-sm px-3" style="background-color: #ffffff;">
+	  <div class="container-fluid">
+	    <a class="navbar-brand fw-bold text-primary" href="#">CollegeConnect</a>
+	    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+	      data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+	      aria-label="Toggle navigation">
+	      <span class="navbar-toggler-icon"></span>
+	    </button>
+
+	    <div class="collapse navbar-collapse" id="navbarNav">
+	      <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="navLinks">
+	        <li class="nav-item"><a class="nav-link" href="student-profile">Student Profile</a></li>
+	        <li class="nav-item"><a class="nav-link" href="student-academic">Academic</a></li>
+	        <li class="nav-item"><a class="nav-link" href="student-search">Search Students</a></li>
+	        <li class="nav-item"><a class="nav-link active" href="student-update">Update Profile</a></li>
+	        <li class="nav-item"><a class="nav-link" href="student-faculty">Faculty-Advisors</a></li>
+	        <li class="nav-item"><a class="nav-link" href="student-setting">Account Settings</a></li>
+	      </ul>
+	    </div>
+	  </div>
+	</nav>
+
+
+
+<!-- 📝 Update Form Section -->
+<div class="container">
+  <div class="update-card mt-5">
+    <h2 class="title">Update Student Profile</h2>
+    <form id="updateForm">
+      <div class="mb-3"> 
+        <label for="studentId" class="form-label">Student ID</label>
+        <input type="text" id="studentId" class="form-control" readonly />
+      </div>
+      <div class="mb-3">
+        <label for="department" class="form-label">Department</label>
+        <input type="text" id="department" class="form-control" readonly />
+      </div>
+      <div class="mb-3">
+        <label for="year" class="form-label">Year</label>
+        <input type="text" id="year" class="form-control" readonly />
+      </div>
+      <div class="mb-3">
+        <label for="name" class="form-label">Full Name</label>
+        <input type="text" id="name" class="form-control" required />
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email Address</label>
+        <input type="email" id="email" class="form-control" required />
+      </div>
+      <div class="mb-3">
+        <label for="phone" class="form-label">Phone Number</label>
+        <input type="number" id="phone" class="form-control" required />
+      </div>
+      <div class="mb-3">
+        <label for="courses" class="form-label">Enrolled Courses</label>
+        <select id="courses" class="form-select" multiple required></select>
+      </div>
+      <div class="d-grid mt-4">
+        <button type="submit" class="btn btn-custom">Save Changes</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- 🔧 Script Section -->
+<script>
+  const form = document.getElementById('updateForm');
+  const courseSelect = document.getElementById('courses');
+
+  const loginData = JSON.parse(sessionStorage.getItem('loginResponse'));
+  const studentProfile = loginData?.body?.profile;
+
+  if (studentProfile) {
+    document.getElementById('studentId').value = studentProfile.user.id;
+    document.getElementById('department').value = studentProfile.department.name;
+    document.getElementById('year').value = studentProfile.year;
+    document.getElementById('name').value = studentProfile.name;
+    document.getElementById('email').value = studentProfile.email;
+    document.getElementById('phone').value = studentProfile.phone;
+  } else {
+    alert('No student profile found. Please log in again.');
+    window.location.href = 'login';
+  }
+
+  fetch('http://localhost:8080/courses')
+    .then(res => res.json())
+    .then(data => {
+      const allCourses = data.body;
+      const departmentId = studentProfile.department.id;
+
+      const filteredCourses = allCourses.filter(course => {
+        return course.department && course.department.id === departmentId;
+      });
+
+      filteredCourses.forEach(course => {
+        const option = document.createElement('option');
+        option.value = course.id;
+        option.text = `${course.courseCode} - ${course.courseName}`;
+        courseSelect.appendChild(option);
+      });
+
+      studentProfile.courses.forEach(course => {
+        const match = [...courseSelect.options].find(opt => parseInt(opt.value) === course.id);
+        if (match) match.selected = true;
+      });
+    })
+    .catch(err => {
+      console.error('Failed to fetch courses:', err);
+      alert('Failed to load courses.');
+    });
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+
+    const selectedCourses = [...courseSelect.selectedOptions].map(opt => ({ id: parseInt(opt.value) }));
+
+    const updatedData = {
+      user: { id: studentProfile.user.id },
+      name: document.getElementById('name').value,
+      email: document.getElementById('email').value,
+      phone: document.getElementById('phone').value,
+      year: studentProfile.year,
+      department: { id: studentProfile.department.id },
+      courses: selectedCourses
+    };
+
+    fetch('http://localhost:8080/api/students', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(updatedData)
+    })
+      .then(res => {
+        if (!res.ok) throw new Error('Update failed');
+        return res.json();
+      })
+      .then(response => {
+        alert('Profile updated successfully!');
+        sessionStorage.setItem('loginResponse', JSON.stringify({
+          ...loginData,
+          body: { ...loginData.body, profile: response.body }
+        }));
+        location.reload();
+      })
+      .catch(error => {
+        console.error('Update error:', error);
+        alert('Error updating profile: ' + error.message);
+      });
+  });
+
+  function logout() {
+    sessionStorage.clear();
+    window.location.href = 'login';
+  }
+</script>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

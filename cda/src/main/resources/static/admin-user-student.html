@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Student Search</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <style>
+    body 	:root {
+	  --primary-color: #007bff;
+	  --accent-color: #00c6ff;
+	  --bg-light: #f0f4f8;
+	  --bg-gradient: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+	  --glass-bg: rgba(255, 255, 255, 0.75);
+	  --glass-blur: blur(10px);
+	}
+
+	
+	/* navbar.css */
+	.custom-navbar {
+	  background-color: #ffffff !important;
+	  border-radius: 12px;
+	  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+	}
+
+	.user-dropdown .btn-outline-primary {
+	  border-radius: 8px;
+	}
+
+	.user-dropdown .dropdown-menu {
+	  font-size: 14px;
+	}
+
+	
+	body {
+	  background: var(--bg-gradient);
+	  font-family: 'Poppins', sans-serif;
+	  padding-bottom: 50px;
+	}
+
+	h2 {
+	  color: #fff;
+	  font-weight: 700;
+	  text-align: center;
+	  margin-bottom: 40px;
+	  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+	}
+
+	.card {
+	  background: var(--glass-bg);
+	  backdrop-filter: var(--glass-blur);
+	  border-radius: 20px;
+	  border: 1px solid rgba(255, 255, 255, 0.3);
+	  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.1);
+	  transition: transform 0.3s ease, box-shadow 0.3s ease;
+	}
+
+	.card:hover {
+	  transform: translateY(-8px);
+	  box-shadow: 0 25px 40px rgba(0, 0, 0, 0.2);
+	}
+
+	.card h5 {
+	  color: #2c3e50;
+	  font-weight: 600;
+	}
+
+	.btn-gradient {
+	  background: var(--bg-gradient);
+	  color: white;
+	  border: none;
+	  transition: 0.3s ease-in-out;
+	  box-shadow: 0 6px 15px rgba(0, 123, 255, 0.3);
+	}
+
+	.btn-gradient:hover {
+	  background: linear-gradient(135deg, #0056b3, #009ddf);
+	  box-shadow: 0 8px 18px rgba(0, 123, 255, 0.4);
+	}
+
+	.form-control, .form-select {
+	  border-radius: 12px;
+	  border: 1px solid #ccc;
+	  padding: 10px 15px;
+	  font-size: 15px;
+	  transition: box-shadow 0.3s ease;
+	}
+
+	.form-control:focus, .form-select:focus {
+	  border-color: var(--primary-color);
+	  box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.1);
+	}
+
+	.modal-content {
+	  border-radius: 20px;
+	  background: #ffffffee;
+	  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+	}
+
+	.modal-header, .modal-footer {
+	  border: none;
+	}
+
+  </style>
+</head>
+<body>
+	<!-- navbar.html -->
+	<nav class="navbar navbar-expand-lg navbar-light shadow-sm mb-4 px-3 custom-navbar">
+	  <div class="container-fluid">
+	    <a class="navbar-brand fw-bold text-primary" href="#">CollegeConnect</a>
+	    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+	      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+	      <span class="navbar-toggler-icon"></span>
+	    </button>
+
+	    <div class="collapse navbar-collapse" id="navbarNav">
+	      <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="navLinks">
+	        <li class="nav-item"><a class="nav-link" href="admin-profile">Admin Profile</a></li>
+	        <li class="nav-item"><a class="nav-link" href="admin-department">Department</a></li>
+	        <li class="nav-item"><a class="nav-link" href="admin-course">Courses</a></li>
+	        <li class="nav-item"><a class="nav-link active" href="admin-user-student">Students</a></li>
+	        <li class="nav-item"><a class="nav-link" href="admin-user-faculty">Faculty</a></li>
+	        <li class="nav-item"><a class="nav-link" href="admin-user-admin">Admins</a></li>
+	        <li class="nav-item"><a class="nav-link" href="admin-update">Update Profile</a></li>
+	        <li class="nav-item"><a class="nav-link" href="admin-setting">Account Settings</a></li>
+	      </ul>
+
+	       
+	    </div>
+	  </div>
+	</nav>
+
+
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Search & Discover Students</h2>
+
+  <!-- FILTERS -->
+  <div class="row mb-3">
+    <div class="col-md-4 mb-2">
+      <input type="text" id="nameFilter" class="form-control" placeholder="Search by Name" />
+    </div>
+    <div class="col-md-4 mb-2">
+      <input type="number" id="idFilter" class="form-control" placeholder="Search by ID" />
+    </div>
+    <div class="col-md-4 mb-2">
+		<select id="branchFilter" class="form-select">
+		  <option value="">Filter by Branch</option>
+		  <option>Computer Science and Engineering</option>
+		  <option>Information Science and Engineering</option>
+		  <option>Electronics and Communication Engineering</option>
+		  <option>Electrical and Electronics Engineering</option>
+		  <option>Mechanical Engineering</option>
+		  <option>Civil Engineering</option>
+		  <option>Artificial Intelligence and Machine Learning</option>
+		  <option>Data Science</option>
+		  <option>Aeronautical Engineering</option>
+		  <option>Aerospace Engineering</option>
+		  <option>Automobile Engineering</option>
+		  <option>Biomedical Engineering</option>
+		  <option>Biotechnology</option>
+		  <option>Chemical Engineering</option>
+		  <option>Environmental Engineering</option>
+		  <option>Industrial Engineering</option>
+		  <option>Instrumentation and Control Engineering</option>
+		  <option>Marine Engineering</option>
+		  <option>Metallurgical Engineering</option>
+		  <option>Mining Engineering</option>
+		  <option>Petroleum Engineering</option>
+		  <option>Robotics and Automation</option>
+		  <option>Telecommunication Engineering</option>
+		</select>
+
+    </div>
+  </div>
+
+  <!-- Buttons -->
+  <div class="row mb-4">
+    <div class="col text-end">
+      <button id="resetBtn" class="btn btn-outline-secondary me-2"><i class="bi bi-arrow-clockwise"></i> Reset</button>
+      <button id="searchBtn" class="btn btn-primary"><i class="bi bi-search"></i> Search</button>
+    </div>
+  </div>
+
+  <div class="row" id="studentList"></div>
+</div>
+
+
+<!-- Edit Modal -->
+<div class="modal fade" id="editStudentModal" tabindex="-1" aria-labelledby="editStudentModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5>Edit Student</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="editUserId">
+        <input type="hidden" id="editDepartmentId">
+        <input type="hidden" id="editFacultyId">
+        <div class="mb-3"><label>Name</label><input type="text" id="editName" class="form-control"></div>
+        <div class="mb-3"><label>Email</label><input type="email" id="editEmail" class="form-control"></div>
+        <div class="mb-3"><label>Phone</label><input type="number" id="editPhone" class="form-control"></div>
+        <div class="mb-3">
+          <label>Courses</label>
+          <select id="editCourses" multiple class="form-select"></select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button class="btn btn-primary" onclick="saveEdit()">Save Changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  const studentList = document.getElementById("studentList");
+  const courseSelect = document.getElementById("editCourses");
+  const nameFilterInput = document.getElementById("nameFilter");
+  const idFilterInput = document.getElementById("idFilter");
+  const branchFilterSelect = document.getElementById("branchFilter");
+  const resetBtn = document.getElementById("resetBtn");
+  const searchBtn = document.getElementById("searchBtn");
+
+  let allStudents = []; // to hold all data for filtering
+
+  function fetchStudents() {
+    fetch("http://localhost:8080/api/admin/viewAll-students")
+      .then(res => res.json())
+      .then(data => {
+        allStudents = data.body || [];
+        renderStudents(allStudents);
+      });
+  }
+
+  function fetchCourses(selectedIds = []) {
+    fetch("http://localhost:8080/courses")
+      .then(res => res.json())
+      .then(data => {
+        courseSelect.innerHTML = '';
+        data.body.forEach(course => {
+          const opt = document.createElement("option");
+          opt.value = course.id;
+          opt.textContent = course.courseName;
+          if (selectedIds.includes(course.id)) opt.selected = true;
+          courseSelect.appendChild(opt);
+        });
+      });
+  }
+
+  function renderStudents(students) {
+    studentList.innerHTML = "";
+    if (students.length === 0) {
+      studentList.innerHTML = `<p class="text-center text-muted">No students found.</p>`;
+      return;
+    }
+    students.forEach(s => {
+      studentList.innerHTML += `
+        <div class="col-md-6 mb-4">
+          <div class="card p-3">
+            <h5>${s.name}</h5>
+            <p><strong>ID:</strong> ${s.userId}</p>
+            <p><strong>Email:</strong> ${s.email}</p>
+            <p><strong>Phone:</strong> ${s.phone}</p>
+            <p><strong>Branch:</strong> ${s.department?.name || '-'}</p>
+            <div class="d-flex gap-2">
+              <button class="btn btn-sm btn-outline-primary" onclick='openEditModal(${JSON.stringify(s)})'><i class="bi bi-pencil-square"></i> Edit</button>
+              <button class="btn btn-sm btn-outline-danger" onclick="deleteStudent(${s.userId})"><i class="bi bi-trash"></i> Delete</button>
+            </div>
+          </div>
+        </div>`;
+    });
+  }
+
+  function openEditModal(student) {
+    document.getElementById("editUserId").value = student.userId;
+    document.getElementById("editName").value = student.name;
+    document.getElementById("editEmail").value = student.email;
+    document.getElementById("editPhone").value = student.phone;
+    document.getElementById("editDepartmentId").value = student.department?.id || 1;
+    document.getElementById("editFacultyId").value = student.facultyAdvisor?.id || 1;
+
+    const courseIds = student.courses?.map(c => c.id) || [];
+    fetchCourses(courseIds);
+
+    new bootstrap.Modal(document.getElementById("editStudentModal")).show();
+  }
+
+  function saveEdit() {
+    const userId = parseInt(document.getElementById("editUserId").value);
+    const name = document.getElementById("editName").value;
+    const email = document.getElementById("editEmail").value;
+    const phone = parseInt(document.getElementById("editPhone").value);
+    const departmentId = parseInt(document.getElementById("editDepartmentId").value);
+    const facultyId = parseInt(document.getElementById("editFacultyId").value);
+
+    const selectedCourses = Array.from(courseSelect.selectedOptions).map(opt => ({ id: parseInt(opt.value) }));
+
+    const payload = {
+      user: { id: userId },
+      name,
+      department: { id: departmentId },
+      year: "3rd Year",
+      email,
+      phone,
+      courses: selectedCourses,
+      facultyAdvisor: { id: facultyId }
+    };
+
+    fetch("http://localhost:8080/api/admin/update-students", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    })
+      .then(res => res.json())
+      .then(() => {
+        bootstrap.Modal.getInstance(document.getElementById("editStudentModal")).hide();
+        fetchStudents();
+      })
+      .catch(err => {
+        console.error("Error updating:", err);
+        alert("Update failed.");
+      });
+  }
+
+  // navbar.js
+  function setupNavbar() {
+    const data = sessionStorage.getItem('loginResponse');
+    const adminNameSpan = document.getElementById('adminName');
+
+    if (data) {
+      try {
+        const parsed = JSON.parse(data);
+        const profile = parsed?.body?.profile;
+        if (profile?.name) adminNameSpan.textContent = profile.name;
+      } catch (e) {
+        console.error("Failed to parse login data.");
+      }
+    }
+
+    const logout = () => {
+      sessionStorage.removeItem('loginResponse');
+      window.location.href = 'login';
+    };
+
+    document.getElementById('logoutBtnNavbar')?.addEventListener('click', logout);
+
+    const navLinks = document.querySelectorAll("#navLinks .nav-link");
+    const currentPath = location.pathname.split("/").pop();
+
+    navLinks.forEach(link => {
+      if (link.getAttribute("href") === currentPath) {
+        link.classList.add("active");
+      }
+
+      link.addEventListener('click', () => {
+        navLinks.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+      });
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", setupNavbar);
+
+  
+  function deleteStudent(userId) {
+    if (!confirm("Are you sure you want to delete this student?")) return;
+    fetch(`http://localhost:8080/api/admin/delete-student/${userId}`, {
+      method: "DELETE"
+    }).then(() => fetchStudents());
+  }
+
+  // FILTER LOGIC
+  function filterStudents() {
+    const nameFilter = nameFilterInput.value.trim().toLowerCase();
+    const idFilter = idFilterInput.value.trim();
+    const branchFilter = branchFilterSelect.value;
+
+    let filtered = allStudents;
+
+    if (nameFilter) {
+      filtered = filtered.filter(s => s.name.toLowerCase().includes(nameFilter));
+    }
+    if (idFilter) {
+      filtered = filtered.filter(s => s.userId.toString() === idFilter);
+    }
+    if (branchFilter) {
+      filtered = filtered.filter(s => s.department?.name === branchFilter);
+    }
+
+    renderStudents(filtered);
+  }
+
+  // Reset filters & reload all
+  function resetFilters() {
+    nameFilterInput.value = "";
+    idFilterInput.value = "";
+    branchFilterSelect.value = "";
+    renderStudents(allStudents);
+  }
+
+  // Event listeners
+  searchBtn.addEventListener("click", filterStudents);
+  resetBtn.addEventListener("click", resetFilters);
+
+  // Initial Load
+  fetchStudents();
+</script>
+</body>
+</html>

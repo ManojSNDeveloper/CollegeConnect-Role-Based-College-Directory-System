@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      display: flex;
+      height: 100vh;
+      background-color: #a2b9f1;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
+      display: flex;
+      background-color: white;
+      border-radius: 16px;
+      overflow: hidden;
+      max-width: 900px;
+      width: 100%;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .left-side {
+      background-color: #dde6fb;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+    }
+
+    .left-side img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .right-side {
+      flex: 1;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .right-side h2 {
+      color: #204ecf;
+      margin-bottom: 10px;
+    }
+
+    .right-side p {
+      margin-bottom: 20px;
+      color: #666;
+    }
+
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    button {
+      background-color: #204ecf;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    .social-buttons {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .social-buttons button {
+      flex: 1;
+      border: 1px solid #ccc;
+      background-color: #fff;
+      color: #444;
+    }
+
+    .signup-link {
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .signup-link a {
+      color: #204ecf;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    #error-msg {
+      display: none;
+      color: red;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="left-side">
+		<img src=" https://cdn-icons-png.flaticon.com/512/9197/9197467.png" alt="Faculty Icon" />
+    </div>
+    <div class="right-side">
+      <h2>Admin Login</h2>
+      <p>Hey enter your details to sign in to your account</p>
+      <div id="error-msg"></div>
+      <input type="text" id="username" placeholder="Enter your username" />
+      <input type="password" id="password" placeholder="Enter your password" />
+      <button id="loginBtn">Login In</button>
+       
+      <div class="signup-link">
+        Don’t have an account? <a href="/admin-register">Signup Now</a>
+      </div>
+    </div>
+  </div>
+ 
+  <script>
+      document.getElementById('loginBtn').addEventListener('click', async () => {
+        const username = document.getElementById('username').value.trim();
+        const password = document.getElementById('password').value.trim();
+        const errorMsg = document.getElementById('error-msg');
+
+        // Reset error message
+        errorMsg.style.display = 'none';
+        errorMsg.textContent = '';
+
+        if (!username || !password) {
+          showError('Please enter both username and password.');
+          return;
+        }
+
+        try {
+          const response = await fetch('/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password })
+          });
+
+          if (!response.ok) {
+            // Try to parse error message, fallback to generic
+            const errData = await response.json().catch(() => ({}));
+            throw new Error(errData.message || 'Login failed');
+          }
+
+          const data = await response.json();
+          const role = data.body?.profile?.user?.role;
+
+          if (role !== 'ADMIN') {
+            showError('Access denied: only admin can log in here.');
+            return;
+          }
+
+          // Save login response to session storage and redirect
+          sessionStorage.setItem('loginResponse', JSON.stringify(data));
+          window.location.href = 'admin-profile.html';
+
+        } catch (error) {
+          showError(error.message);
+        }
+
+        function showError(message) {
+          errorMsg.style.display = 'block';
+          errorMsg.textContent = message;
+        }
+      });
+    </script>
+  	
+  
+</body>
+</html>

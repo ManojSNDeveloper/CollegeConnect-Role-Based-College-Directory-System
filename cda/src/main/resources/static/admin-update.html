@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Update Admin Profile</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+  <style>
+    :root {
+      --primary-color: #6a1b9a;
+      --accent-color: #8e24aa;
+      --bg-gradient: linear-gradient(135deg, #f3e5f5, #ffffff);
+      --card-bg: #ffffff;
+      --input-bg: #f4f6f8;
+      --input-border: #cfd8dc;
+      --text-dark: #263238;
+      --shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+      --radius: 12px;
+      --transition: all 0.3s ease;
+    }
+	
+	
+	
+	/* navbar.css */
+	.custom-navbar {
+	  background-color: #ffffff !important;
+	  border-radius: 12px;
+	  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+	}
+
+	.user-dropdown .btn-outline-primary {
+	  border-radius: 8px;
+	}
+
+	.user-dropdown .dropdown-menu {
+	  font-size: 14px;
+	}
+
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      padding-top: 30px;
+      background: var(--bg-gradient);
+      min-height: 100vh;
+      color: var(--text-dark);
+    }
+
+    .update-card {
+      background: var(--card-bg);
+      padding: 40px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      max-width: 700px;
+      margin: auto;
+      animation: fadeIn 0.6s ease-in-out;
+    }
+
+    h2.title {
+      text-align: center;
+      color: var(--primary-color);
+      margin-bottom: 30px;
+    }
+
+    .form-control {
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      border-radius: var(--radius);
+      padding: 12px;
+    }
+
+    .btn-custom {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 12px;
+      border-radius: var(--radius);
+      border: none;
+      font-weight: 600;
+    }
+
+    .btn-custom:hover {
+      background-color: var(--accent-color);
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+
+	<!-- navbar.html -->
+	<nav class="navbar navbar-expand-lg navbar-light shadow-sm mb-4 px-3 custom-navbar">
+	  <div class="container-fluid">
+	    <a class="navbar-brand fw-bold text-primary" href="#">CollegeConnect</a>
+	    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+	      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+	      <span class="navbar-toggler-icon"></span>
+	    </button>
+
+	    <div class="collapse navbar-collapse" id="navbarNav">
+	      <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="navLinks">
+	        <li class="nav-item"><a class="nav-link" href="admin-profile">Admin Profile</a></li>
+	        <li class="nav-item"><a class="nav-link" href="admin-department">Department</a></li>
+	        <li class="nav-item"><a class="nav-link" href="admin-course">Courses</a></li>
+	        <li class="nav-item"><a class="nav-link" href="admin-user-student">Students</a></li>
+	        <li class="nav-item"><a class="nav-link" href="admin-user-faculty">Faculty</a></li>
+	        <li class="nav-item"><a class="nav-link" href="admin-user-admin">Admins</a></li>
+	        <li class="nav-item"><a class="nav-link active" href="admin-update">Update Profile</a></li>
+	        <li class="nav-item"><a class="nav-link" href="admin-setting">Account Settings</a></li>
+	      </ul>
+
+	      <div class="dropdown user-dropdown">
+	        <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="userDropdown"
+	          data-bs-toggle="dropdown" aria-expanded="false">
+	          <i class="bi bi-person-circle"></i> <span id="adminName">Admin</span>
+	        </button>
+	        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+	          <li><a class="dropdown-item" href="admin-profile">Profile</a></li>
+	          <li><a class="dropdown-item" href="admin-setting">Settings</a></li>
+	          <li><hr class="dropdown-divider" /></li>
+	          <li><a class="dropdown-item" href="#" id="logoutBtnNavbar">Logout</a></li>
+	        </ul>
+	      </div>
+	    </div>
+	  </div>
+	</nav>
+
+  <!-- Update Card -->
+  <div class="container">
+    <div class="update-card mt-5">
+      <h2 class="title">Update Admin Profile</h2>
+      <form id="adminUpdateForm">
+        <div class="mb-3">
+          <label for="adminId" class="form-label">Admin ID</label>
+          <input type="text" id="adminId" class="form-control" readonly />
+        </div>
+        <div class="mb-3">
+          <label for="department" class="form-label">Department</label>
+          <input type="text" id="department" class="form-control" readonly />
+        </div>
+        <div class="mb-3">
+          <label for="name" class="form-label">Full Name</label>
+          <input type="text" id="name" class="form-control" required />
+        </div>
+        <div class="mb-3">
+          <label for="contactEmail" class="form-label">Contact Email</label>
+          <input type="email" id="contactEmail" class="form-control" required />
+        </div>
+        <div class="mb-3">
+          <label for="phone" class="form-label">Phone Number</label>
+          <input type="number" id="phone" class="form-control" required />
+        </div>
+        <div class="d-grid mt-4">
+          <button type="submit" class="btn btn-custom">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById("adminUpdateForm");
+
+    const loginData = JSON.parse(sessionStorage.getItem('loginResponse'));
+    const adminProfile = loginData?.body?.profile;
+
+    if (adminProfile) {
+      document.getElementById('adminId').value = adminProfile.user.id;
+      document.getElementById('department').value = adminProfile.department.name;
+      document.getElementById('name').value = adminProfile.name;
+      document.getElementById('contactEmail').value = adminProfile.contactEmail;
+      document.getElementById('phone').value = adminProfile.phone;
+    } else {
+      alert("No admin profile found. Please log in again.");
+      window.location.href = "login";
+    }
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const updatedAdmin = {
+        user: { id: adminProfile.user.id },
+        id: adminProfile.user.id,
+        name: document.getElementById("name").value,
+        contactEmail: document.getElementById("contactEmail").value,
+        phone: document.getElementById("phone").value,
+        department: { id: adminProfile.department.id }
+      };
+
+      fetch("http://localhost:8080/api/admin/update-admin", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedAdmin)
+      })
+      .then(res => {
+        if (!res.ok) throw new Error("Update failed.");
+        return res.json();
+      })
+      .then(data => {
+        alert("Profile updated successfully!");
+        sessionStorage.setItem('loginResponse', JSON.stringify({
+          ...loginData,
+          body: { ...loginData.body, profile: data.body }
+        }));
+        location.reload();
+      })
+      .catch(err => {
+        console.error("Update error:", err);
+        alert("Error: " + err.message);
+      });
+    });
+	
+	// navbar.js
+	function setupNavbar() {
+	  const data = sessionStorage.getItem('loginResponse');
+	  const adminNameSpan = document.getElementById('adminName');
+
+	  if (data) {
+	    try {
+	      const parsed = JSON.parse(data);
+	      const profile = parsed?.body?.profile;
+	      if (profile?.name) adminNameSpan.textContent = profile.name;
+	    } catch (e) {
+	      console.error("Failed to parse login data.");
+	    }
+	  }
+
+	  const logout = () => {
+	    sessionStorage.removeItem('loginResponse');
+	    window.location.href = 'login';
+	  };
+
+	  document.getElementById('logoutBtnNavbar')?.addEventListener('click', logout);
+
+	  const navLinks = document.querySelectorAll("#navLinks .nav-link");
+	  const currentPath = location.pathname.split("/").pop();
+
+	  navLinks.forEach(link => {
+	    if (link.getAttribute("href") === currentPath) {
+	      link.classList.add("active");
+	    }
+
+	    link.addEventListener('click', () => {
+	      navLinks.forEach(l => l.classList.remove('active'));
+	      link.classList.add('active');
+	    });
+	  });
+	}
+
+	document.addEventListener("DOMContentLoaded", setupNavbar);
+
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

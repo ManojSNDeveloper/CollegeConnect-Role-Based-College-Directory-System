@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js"></script>
+  <title>CollegeConnect | Home</title>
+  
+</head>
+<body>
+ 
+  <!-- Navbar -->
+  <div class="navbar">
+    <div class="logo">
+      <img src="https://cdn-icons-png.flaticon.com/512/1048/1048314.png" alt="College Logo">
+      <h2>CollegeConnect</h2>
+    </div>
+    <div class="menu">
+        <a href="#departments">Departments</a>
+        <a href="#faculty">Faculty</a>
+        <a href="#courses">Courses</a>
+      <a href="#campus">Campus</a>
+      <a href="#contact">Contact Us</a>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <div class="hero">
+    <div class="left">
+      <h1>Start Your Journey with Us</h1>
+      <p>Discover the endless possibilities at our college. Your future begins here!</p>
+     <button onclick="window.location.href='/login'">Get Started</button>
+    </div>
+	<div class="right">
+		<img src="/assets/MIT.png" alt="College Photo" style="max-width:100%; height:auto;">
+	</div> 
+  </div>
+
+
+  <!-- Departments Section -->
+<div id="departments" style="padding: 60px 40px; background-color: #f9f9f9;">
+    <h2 style="text-align: center; font-size: 36px; margin-bottom: 10px; color: #000;">Departments</h2>
+    <p style="text-align: center; font-size: 18px; margin-bottom: 40px; color: #444;">
+      Explore different departments in the college, ranging from Computer Science to Humanities.
+    </p>
+  
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px;">
+      
+      <!-- Department Card -->
+      <div class="dept-card">
+        <img src="https://cdn-icons-png.flaticon.com/512/3665/3665923.png" alt="BME Icon">
+        <h3>Biomedical Engineering (BME)</h3>
+        <p>Integrating engineering principles with medical sciences to develop healthcare technologies.</p>
+        <button>Learn More</button>
+      </div>
+  
+      <!-- Department Card -->
+      <div class="dept-card">
+        <img src="https://cdn-icons-png.flaticon.com/512/2721/2721290.png" alt="CSE Icon">
+        <h3>Computer Science Engineering (CSE)</h3>
+        <p>Focus on software development, algorithms, and data structures. Prepare for a career in tech.</p>
+        <button>Learn More</button>
+      </div>
+  
+      <!-- Department Card -->
+      <div class="dept-card">
+        <img src="https://cdn-icons-png.flaticon.com/512/3380/3380010.png" alt="AIML Icon">
+        <h3>Artificial Intelligence & Machine Learning (AIML)</h3>
+        <p>Specializing in intelligent systems and algorithms to analyze data and automate decisions.</p>
+        <button>Learn More</button>
+      </div>
+  
+      <!-- Department Card -->
+      <div class="dept-card">
+        <img src="https://cdn-icons-png.flaticon.com/512/2285/2285573.png" alt="ECE Icon">
+        <h3>Electronics & Communication (ECE)</h3>
+        <p>Design and development of electronic devices, circuits, and communication systems.</p>
+        <button>Learn More</button>
+      </div>
+  
+      <!-- Department Card -->
+      <div class="dept-card">
+        <img src="https://cdn-icons-png.flaticon.com/512/1114/1114898.png" alt="ME Icon">
+        <h3>Mechanical Engineering (ME)</h3>
+        <p>Application of mechanics and energy principles in the design of machines and tools.</p>
+        <button>Learn More</button>
+      </div>
+  
+      <!-- Department Card -->
+      <div class="dept-card">
+        <img src="https://cdn-icons-png.flaticon.com/512/1995/1995574.png" alt="Civil Icon">
+        <h3>Civil Engineering</h3>
+        <p>Design, construction, and maintenance of infrastructure such as roads, bridges, and buildings.</p>
+        <button>Learn More</button>
+      </div>
+  
+    </div>
+  </div>
+  
+  <!-- Department Card CSS -->
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+<!-- Faculty Section -->
+<div id="faculty" style="padding: 60px 40px; background-color: #fff;">
+    <h2 style="text-align: center; font-size: 36px; margin-bottom: 10px; color: #000;">Faculty</h2>
+    <p style="text-align: center; font-size: 18px; margin-bottom: 40px; color: #444;">
+      Meet our experienced and passionate faculty members.
+    </p>
+  
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px;">
+      
+      <!-- Faculty Card -->
+      <div class="faculty-card">
+        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Dr. John Doe">
+        <h3>Dr. John Doe</h3>
+        <h4>Professor of Computer Science</h4>
+        <p>An expert in artificial intelligence and machine learning with over 15 years of teaching experience.</p>
+      </div>
+  
+      <!-- Faculty Card -->
+      <div class="faculty-card">
+        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Dr. Jane Smith">
+        <h3>Dr. Jane Smith</h3>
+        <h4>Associate Professor of Mathematics</h4>
+        <p>Specializes in applied mathematics and has published numerous research papers in top journals.</p>
+      </div>
+  
+      <!-- Faculty Card -->
+      <div class="faculty-card">
+        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Dr. Emily Johnson">
+        <h3>Dr. Emily Johnson</h3>
+        <h4>Senior Lecturer in Physics</h4>
+        <p>Passionate about teaching quantum mechanics and mentoring students in research projects.</p>
+      </div>
+  
+    </div>
+  
+    <!-- Faculty Quotes -->
+    <div style="margin-top: 60px; text-align: center;">
+      <h3 style="font-size: 24px; color: #333;">Words from Our Faculty</h3>
+      <p style="font-style: italic; color: #555; margin-top: 20px;">"Teaching is the greatest act of optimism." – <strong>Dr. John Doe</strong></p>
+      <p style="font-style: italic; color: #555;">"Our mission is to inspire students to achieve their best." – <strong>Dr. Jane Smith</strong></p>
+    </div>
+  </div>
+  
+  <!-- Faculty Card CSS -->
+ 
+  <!-- Courses Section -->
+<div id="courses" style="padding: 60px 40px; background-color: #fff;">
+    <h2 style="text-align: center; font-size: 36px; margin-bottom: 10px; color: #000;">Courses</h2>
+    <p style="text-align: center; font-size: 18px; margin-bottom: 40px; color: #444;">
+      Browse through a wide variety of courses that we offer across multiple disciplines.
+    </p>
+  
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px;">
+      <!-- Course Card -->
+      <div class="course-card">
+        <h3>Computer Science</h3>
+        <p>Dive into programming, data structures, algorithms, and software development.</p>
+        <button>View Details</button>
+      </div>
+  
+      <div class="course-card">
+        <h3>Business Administration</h3>
+        <p>Learn about management, marketing, finance, and entrepreneurship.</p>
+        <button>View Details</button>
+      </div>
+  
+      <div class="course-card">
+        <h3>Mechanical Engineering</h3>
+        <p>Explore mechanics, thermodynamics, materials science, and design.</p>
+        <button>View Details</button>
+      </div>
+  
+      <div class="course-card">
+        <h3>Electrical Engineering</h3>
+        <p>Study circuits, power systems, control systems, and electromagnetics.</p>
+        <button>View Details</button>
+      </div>
+  
+      <div class="course-card">
+        <h3>Civil Engineering</h3>
+        <p>Learn structural analysis, geotechnical engineering, and construction management.</p>
+        <button>View Details</button>
+      </div>
+  
+      <div class="course-card">
+        <h3>Information Technology</h3>
+        <p>Focus on networking, database systems, cybersecurity, and IT services.</p>
+        <button>View Details</button>
+      </div>
+  
+      <div class="course-card">
+        <h3>Biotechnology</h3>
+        <p>Understand genetics, bioinformatics, molecular biology, and biotech innovations.</p>
+        <button>View Details</button>
+      </div>
+  
+      <div class="course-card">
+        <h3>Architecture</h3>
+        <p>Delve into design, urban planning, construction techniques, and sustainability.</p>
+        <button>View Details</button>
+      </div>
+  
+      <div class="course-card">
+        <h3>Pharmacy</h3>
+        <p>Study pharmacology, medicinal chemistry, drug formulation, and clinical practice.</p>
+        <button>View Details</button>
+      </div>
+  
+      <div class="course-card">
+        <h3>Mathematics</h3>
+        <p>Advanced calculus, linear algebra, probability, and mathematical modeling.</p>
+        <button>View Details</button>
+      </div>
+  
+      <div class="course-card">
+        <h3>Physics</h3>
+        <p>Study quantum mechanics, electromagnetism, optics, and classical mechanics.</p>
+        <button>View Details</button>
+      </div>
+  
+      <div class="course-card">
+        <h3>Environmental Science</h3>
+        <p>Explore ecology, climate science, waste management, and sustainability.</p>
+        <button>View Details</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Course Card CSS -->
+
+  <!-- Campus Section -->
+<div id="campus" style="padding: 60px 40px; background-color: #f9f9f9;">
+    <h2 style="text-align: center; font-size: 36px; color: #000; margin-bottom: 10px;">Campus</h2>
+    <p style="text-align: center; font-size: 18px; color: #444; margin-bottom: 40px;">
+      Discover our beautiful campus with state-of-the-art facilities and infrastructure.
+    </p>
+  
+    <!-- Campus Images -->
+    <!-- Campus Images -->
+<div style="display: flex; justify-content: center; gap: 30px; margin-bottom: 50px; flex-wrap: wrap;">
+    <img src="https://images.pexels.com/photos/207691/pexels-photo-207691.jpeg" alt="Campus 1" class="campus-img" />
+<img src="https://images.pexels.com/photos/159775/library-la-trobe-study-students-159775.jpeg" alt="Campus 2" class="campus-img" />
+<img src="https://images.pexels.com/photos/256559/pexels-photo-256559.jpeg" alt="Campus 3" class="campus-img" />
+
+  </div>
+  
+  
+    <!-- Facility Cards -->
+    <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 25px;">
+      <div class="campus-card">
+        <h3>Library</h3>
+        <p>A spacious library equipped with modern resources and study areas.</p>
+      </div>
+  
+      <div class="campus-card">
+        <h3>Sports Complex</h3>
+        <p>State-of-the-art facilities for various sports and recreational activities.</p>
+      </div>
+  
+      <div class="campus-card">
+        <h3>Laboratories</h3>
+        <p>Advanced laboratories for practical learning and research.</p>
+      </div>
+  
+      <div class="campus-card">
+        <h3>Cafeteria</h3>
+        <p>A cozy cafeteria offering a variety of food options for students.</p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- CSS -->
+ 
+
+
+
+
+
+  <!-- Contact Us Section -->
+<div id="contact" style="padding: 60px 20px; background-color: #fff;">
+    <h2 style="text-align: center; font-size: 36px; color: #000;">Contact Us</h2>
+    <p style="text-align: center; font-size: 18px; color: #444; margin-bottom: 40px;">
+      Get in touch with us for more information or inquiries regarding admissions.
+    </p>
+  
+    <div style="max-width: 500px; margin: auto; padding: 30px; background-color: #f9f9f9; border-radius: 10px; box-shadow: 0 8px 16px rgba(0,0,0,0.1);">
+      <form>
+        <label for="name" style="display:block; margin-bottom: 5px;">Name:</label>
+        <input type="text" id="name" name="name" style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px;">
+  
+        <label for="email" style="display:block; margin-bottom: 5px;">Email:</label>
+        <input type="email" id="email" name="email" style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px;">
+  
+        <label for="message" style="display:block; margin-bottom: 5px;">Message:</label>
+        <textarea id="message" name="message" rows="5" style="width: 100%; padding: 10px; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 5px;"></textarea>
+  
+        <button type="submit" style="width: 100%; padding: 12px; background-color: #3b0ad2; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">
+          Send Message
+        </button>
+      </form>
+    </div>
+  </div>
+  
+  <!-- Follow Us Section -->
+<div style="text-align: center; margin-top: 40px;">
+    <h3>Follow Us</h3>
+    <div style="font-size: 28px; margin-top: 10px;">
+      <a href="#" style="margin: 0 15px; color: #3b5998;"><i class="fab fa-facebook-f"></i></a>
+      <a href="#" style="margin: 0 15px; color: #1da1f2;"><i class="fab fa-twitter"></i></a>
+      <a href="#" style="margin: 0 15px; color: #e1306c;"><i class="fab fa-instagram"></i></a>
+    </div>
+  </div>
+  
+
+
+</body>
+</html>

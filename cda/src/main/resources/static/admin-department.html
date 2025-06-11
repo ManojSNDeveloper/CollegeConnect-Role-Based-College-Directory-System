@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Department Management</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+   
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+	
+	/* navbar.css */
+	.custom-navbar {
+	  background-color: #ffffff !important;
+	  border-radius: 12px;
+	  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+	}
+
+	.user-dropdown .btn-outline-primary {
+	  border-radius: 8px;
+	}
+
+	.user-dropdown .dropdown-menu {
+	  font-size: 14px;
+	}
+
+    :root {
+      --primary: #2bbbad;
+      --primary-hover: #26a69a;
+      --bg: #f9fbfc;
+      --card-bg: #ffffff;
+      --text: #333;
+      --muted: #6c757d;
+      --radius: 12px;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      --font: 'Nunito', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      font-family: var(--font);
+      color: var(--text);
+      padding: 40px 20px;
+    }
+
+    h2.text-center {
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 30px;
+    }
+
+    .btn-custom {
+      background-color: var(--primary);
+      color: #fff;
+      font-weight: 600;
+      border: none;
+      padding: 10px 18px;
+      border-radius: var(--radius);
+      transition: background 0.3s ease;
+    }
+
+    .btn-custom:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .table {
+      background-color: var(--card-bg);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .table thead {
+      background-color: var(--primary);
+      color: white;
+      font-weight: 600;
+    }
+
+    .table th,
+    .table td {
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    .btn-sm {
+      font-size: 0.85rem;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-weight: 600;
+    }
+
+    .btn-primary {
+      background-color: #1976d2;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background-color: #1565c0;
+    }
+
+    .btn-danger {
+      background-color: #d32f2f;
+      border: none;
+    }
+
+    .btn-danger:hover {
+      background-color: #c62828;
+    }
+
+    .modal-content {
+      border-radius: var(--radius);
+      background-color: var(--card-bg);
+      box-shadow: var(--shadow);
+    }
+
+    .modal-title {
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .form-control {
+      border-radius: var(--radius);
+      border: 1px solid #ced4da;
+      padding: 10px;
+      transition: border 0.2s ease;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 0.2rem rgba(43, 187, 173, 0.2);
+    }
+
+    .modal-footer .btn {
+      width: 100%;
+      border-radius: var(--radius);
+    }
+
+    @media (max-width: 576px) {
+      .table thead {
+        display: none;
+      }
+
+      .table tbody tr {
+        display: block;
+        background-color: var(--card-bg);
+        margin-bottom: 1rem;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 1rem;
+      }
+
+      .table tbody td {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.5rem 0;
+      }
+    }
+  </style>
+
+  
+</head>
+<body>
+	
+	<!-- navbar.html -->
+	<nav class="navbar navbar-expand-lg navbar-light shadow-sm mb-4 px-3 custom-navbar">
+	  <div class="container-fluid">
+	    <a class="navbar-brand fw-bold text-primary" href="#">CollegeConnect</a>
+	    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+	      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+	      <span class="navbar-toggler-icon"></span>
+	    </button>
+
+	    <div class="collapse navbar-collapse" id="navbarNav">
+	      <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="navLinks">
+	        <li class="nav-item"><a class="nav-link" href="admin-profile">Admin Profile</a></li>
+	        <li class="nav-item"><a class="nav-link active" href="admin-department">Department</a></li>
+	        <li class="nav-item"><a class="nav-link" href="admin-course">Courses</a></li>
+	        <li class="nav-item"><a class="nav-link" href="admin-user-student">Students</a></li>
+	        <li class="nav-item"><a class="nav-link" href="admin-user-faculty">Faculty</a></li>
+	        <li class="nav-item"><a class="nav-link" href="admin-user-admin">Admins</a></li>
+	        <li class="nav-item"><a class="nav-link" href="admin-update">Update Profile</a></li>
+	        <li class="nav-item"><a class="nav-link" href="admin-setting">Account Settings</a></li>
+	      </ul>
+
+	      <div class="dropdown user-dropdown">
+	        <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button" id="userDropdown"
+	          data-bs-toggle="dropdown" aria-expanded="false">
+	          <i class="bi bi-person-circle"></i> <span id="adminName">Admin</span>
+	        </button>
+	        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+	          <li><a class="dropdown-item" href="admin-profile">Profile</a></li>
+	          <li><a class="dropdown-item" href="admin-setting">Settings</a></li>
+	          <li><hr class="dropdown-divider" /></li>
+	          <li><a class="dropdown-item" href="#" id="logoutBtnNavbar">Logout</a></li>
+	        </ul>
+	      </div>
+	    </div>
+	  </div>
+	</nav>
+
+	
+  <div class="container">
+    <h2 class="text-center mb-4">🏛️ Department Management</h2>
+
+    <!-- Add Button -->
+    <div class="d-flex justify-content-end mb-3">
+      <button class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#departmentModal" onclick="openAddModal()">+ Add Department</button>
+    </div>
+
+    <!-- Department Table -->
+    <table class="table table-bordered shadow-sm">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="deptTableBody">
+        <!-- Rows injected by JS -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Add/Edit Department Modal -->
+  <div class="modal fade" id="departmentModal" tabindex="-1" aria-labelledby="departmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <form id="departmentForm" class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalTitle">Add Department</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="deptId" />
+          <div class="mb-3">
+            <label for="deptName" class="form-label">Department Name</label>
+            <input type="text" class="form-control" id="deptName" required />
+          </div>
+          <div class="mb-3">
+            <label for="deptDescription" class="form-label">Description</label>
+            <textarea class="form-control" id="deptDescription" required></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-custom">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- JS Logic -->
+  <script>
+    const deptTableBody = document.getElementById('deptTableBody');
+    const deptForm = document.getElementById('departmentForm');
+    const modalTitle = document.getElementById('modalTitle');
+    const deptIdInput = document.getElementById('deptId');
+    const deptNameInput = document.getElementById('deptName');
+    const deptDescInput = document.getElementById('deptDescription');
+    const deptModal = new bootstrap.Modal(document.getElementById('departmentModal'));
+
+    let isEditMode = false;
+
+	
+    // Load departments
+    function fetchDepartments() {
+      fetch('http://localhost:8080/dept')
+        .then(res => res.json())
+        .then(data => {
+          const departments = data.body;
+          deptTableBody.innerHTML = '';
+          departments.forEach(dept => {
+            deptTableBody.innerHTML += `
+              <tr>
+                <td>${dept.id}</td>
+                <td>${dept.name}</td>
+                <td>${dept.description}</td>
+				<td>
+				  <button class="btn btn-sm btn-primary me-2" onclick='openEditModal(${JSON.stringify(dept)})'>Edit</button>
+				  <button class="btn btn-sm btn-danger" onclick='deleteDepartment(${dept.id})'>Delete</button>
+				</td>
+              </tr>
+            `;
+          });
+        })
+        .catch(err => console.error('Failed to load departments:', err));
+    }
+
+	// navbar.js
+	function setupNavbar() {
+	  const data = sessionStorage.getItem('loginResponse');
+	  const adminNameSpan = document.getElementById('adminName');
+
+	  if (data) {
+	    try {
+	      const parsed = JSON.parse(data);
+	      const profile = parsed?.body?.profile;
+	      if (profile?.name) adminNameSpan.textContent = profile.name;
+	    } catch (e) {
+	      console.error("Failed to parse login data.");
+	    }
+	  }
+
+	  const logout = () => {
+	    sessionStorage.removeItem('loginResponse');
+	    window.location.href = 'login';
+	  };
+
+	  document.getElementById('logoutBtnNavbar')?.addEventListener('click', logout);
+
+	  const navLinks = document.querySelectorAll("#navLinks .nav-link");
+	  const currentPath = location.pathname.split("/").pop();
+
+	  navLinks.forEach(link => {
+	    if (link.getAttribute("href") === currentPath) {
+	      link.classList.add("active");
+	    }
+
+	    link.addEventListener('click', () => {
+	      navLinks.forEach(l => l.classList.remove('active'));
+	      link.classList.add('active');
+	    });
+	  });
+	}
+
+	document.addEventListener("DOMContentLoaded", setupNavbar);
+
+	
+    // Open modal for add
+    function openAddModal() {
+      isEditMode = false;
+      modalTitle.textContent = 'Add Department';
+      deptIdInput.value = '';
+      deptNameInput.value = '';
+      deptDescInput.value = '';
+    }
+	
+	function deleteDepartment(id) {
+	  if (!confirm("Are you sure you want to delete this department?")) return;
+
+	  fetch(`http://localhost:8080/dept/delete/${id}`, {
+	    method: "DELETE"
+	  })
+	    .then(res => {
+	      if (!res.ok) throw new Error("Failed to delete department.");
+	      return res.json();
+	    })
+	    .then(() => {
+	      alert("Department deleted successfully.");
+	      fetchDepartments(); // Refresh table
+	    })
+	    .catch(err => {
+	      console.error("Delete error:", err);
+	      alert("Failed to delete department.");
+	    });
+	}
+
+
+    // Open modal for edit
+    function openEditModal(dept) {
+      isEditMode = true;
+      modalTitle.textContent = 'Edit Department';
+      deptIdInput.value = dept.id;
+      deptNameInput.value = dept.name;
+      deptDescInput.value = dept.description;
+      deptModal.show();
+    }
+
+    // Submit form
+    deptForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const dept = {
+        id: deptIdInput.value || 0,
+        name: deptNameInput.value.trim(),
+        description: deptDescInput.value.trim()
+      };
+
+      const url = isEditMode ? 'http://localhost:8080/dept/update' : 'http://localhost:8080/dept';
+      const method = isEditMode ? 'PUT' : 'POST';
+
+      fetch(url, {
+        method: method,
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dept)
+      })
+        .then(res => {
+          if (!res.ok) throw new Error('Error saving department');
+          return res.json();
+        })
+        .then(() => {
+          deptModal.hide();
+          fetchDepartments();
+        })
+        .catch(err => {
+          console.error(err);
+          alert('Failed to save department');
+        });
+    });
+
+    // Initialize
+    fetchDepartments();
+  </script>
+</body>
+</html>

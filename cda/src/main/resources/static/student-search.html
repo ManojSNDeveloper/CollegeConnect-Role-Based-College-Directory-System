@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Search & Discover - Students</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #f0f4f8, #e0eafc);
+      font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    h2 {
+      text-align: center;
+      font-weight: 700;
+      margin-bottom: 30px;
+      color: #2c3e50;
+    }
+
+    .card {
+      border: none;
+      transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+      background: #ffffff;
+      border-radius: 15px;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .card h5 {
+      font-weight: 600;
+      color: #34495e;
+    }
+
+    .form-select, .form-control {
+      border-radius: 10px;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    #applyFilters {
+      background: linear-gradient(135deg, #007bff, #00c6ff);
+      border: none;
+      transition: background 0.3s ease;
+    }
+
+    #applyFilters:hover {
+      background: linear-gradient(135deg, #0056b3, #00a1d6);
+    }
+
+    #resetFilters {
+      background-color: #adb5bd;
+      border: none;
+    }
+
+    #resetFilters:hover {
+      background-color: #6c757d;
+    }
+
+    .row.mb-3 {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    ul {
+      padding-left: 18px;
+    }
+
+    @media (max-width: 768px) {
+      .form-control, .form-select {
+        margin-bottom: 10px;
+      }
+      .d-flex {
+        flex-direction: column;
+      }
+      .d-flex button {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+	<!-- Navigation Bar -->
+	<nav class="navbar navbar-expand-lg navbar-light shadow-sm mb-4 px-3" style="background-color: #ffffff;">
+	  <div class="container-fluid">
+	    <a class="navbar-brand fw-bold text-primary" href="#">CollegeConnect</a>
+	    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+	      data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+	      aria-label="Toggle navigation">
+	      <span class="navbar-toggler-icon"></span>
+	    </button>
+
+	    <div class="collapse navbar-collapse" id="navbarNav">
+	      <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="navLinks">
+	        <li class="nav-item"><a class="nav-link" href="student-profile">Student Profile</a></li>
+	        <li class="nav-item"><a class="nav-link" href="student-academic">Academic</a></li>
+	        <li class="nav-item"><a class="nav-link active" href="student-search">Search Students</a></li>
+	        <li class="nav-item"><a class="nav-link" href="student-update">Update Profile</a></li>
+	        <li class="nav-item"><a class="nav-link" href="student-faculty">Faculty-Advisors</a></li>
+	        <li class="nav-item"><a class="nav-link" href="student-setting">Account Settings</a></li>
+	      </ul>
+	    </div>
+	  </div>
+	</nav>
+
+
+<!-- Main Content -->
+<div class="container mt-4">
+  <h2>Search & Discover - Students</h2>
+
+  <div class="row mb-3">
+    <div class="col-md-2">
+      <input type="text" id="idFilter" class="form-control" placeholder="Search by ID">
+    </div>
+    <div class="col-md-2">
+      <select id="yearFilter" class="form-select">
+        <option value="">-- Select Year --</option>
+        <option value="1st Year">1st Year</option>
+        <option value="2nd Year">2nd Year</option>
+        <option value="3rd Year">3rd Year</option>
+        <option value="4th Year">4th Year</option>
+      </select>
+    </div>
+    <div class="col-md-2">
+      <select id="branchFilter" class="form-select">
+        <option value="">-- Select Branch --</option>
+        <option value="Computer Science and Engineering">Computer Science and Engineering</option>
+        <option value="Mechanical Engineering">Mechanical Engineering</option>
+        <option value="Electrical and Electronics Engineering">Electrical and Electronics Engineering</option>
+        <option value="Civil Engineering">Civil Engineering</option>
+        <option value="Information Science and Engineering">Information Science and Engineering</option>
+      </select>
+    </div>
+    <div class="col-md-2">
+      <input type="text" id="nameFilter" class="form-control" placeholder="Search by name">
+    </div>
+    <div class="col-md-4 d-flex">
+      <button id="applyFilters" class="btn text-white me-2">Apply</button>
+      <button id="resetFilters" class="btn text-white">Reset</button>
+    </div>
+  </div>
+
+  <div id="studentList" class="row row-cols-1 row-cols-md-2 g-4"></div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const studentList = document.getElementById("studentList");
+    const idFilter = document.getElementById("idFilter");
+    const yearFilter = document.getElementById("yearFilter");
+    const branchFilter = document.getElementById("branchFilter");
+    const nameFilter = document.getElementById("nameFilter");
+    const applyFiltersBtn = document.getElementById("applyFilters");
+    const resetFiltersBtn = document.getElementById("resetFilters");
+
+    function loadAllStudents() {
+      fetch("http://localhost:8080/api/students/search")
+        .then(res => res.json())
+        .then(data => renderStudents(data.body))
+        .catch(() => showError());
+    }
+
+    function searchById(id) {
+      fetch(`http://localhost:8080/api/students/${id}/profile`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.body) {
+            renderStudents([data.body]);
+          } else {
+            studentList.innerHTML = `<p class="text-danger">No student found with ID ${id}.</p>`;
+          }
+        })
+        .catch(() => showError());
+    }
+
+    function searchByBranch(branch) {
+      fetch(`http://localhost:8080/api/students/branch/${encodeURIComponent(branch)}`)
+        .then(res => res.json())
+        .then(data => renderStudents(data.body))
+        .catch(() => showError());
+    }
+
+    function searchByYear(year) {
+      fetch(`http://localhost:8080/api/students/year/${encodeURIComponent(year)}`)
+        .then(res => res.json())
+        .then(data => renderStudents(data.body))
+        .catch(() => showError());
+    }
+
+    function searchByName(name) {
+      fetch(`http://localhost:8080/api/students/name/${encodeURIComponent(name)}`)
+        .then(res => res.json())
+        .then(data => renderStudents(data.body))
+        .catch(() => showError());
+    }
+
+    function renderStudents(students) {
+      studentList.innerHTML = "";
+      if (!students || students.length === 0) {
+        studentList.innerHTML = `<p class="text-danger">No students found.</p>`;
+        return;
+      }
+
+      students.forEach(student => {
+        const courseList = student.courses?.map(course =>
+          `<li>${course.courseCode} - ${course.courseName}</li>`
+        ).join("") || "<li>No courses</li>";
+
+        const card = `
+          <div class="col">
+            <div class="card shadow rounded p-3">
+              <h5>${student.name}</h5>
+              <p><strong>Department:</strong> ${student.department.name}</p>
+              <p><strong>Year:</strong> ${student.year}</p>
+              <p><strong>Email:</strong> ${student.email}</p>
+              <p><strong>Phone:</strong> ${student.phone}</p>
+              <p><strong>Courses:</strong></p>
+              <ul>${courseList}</ul>
+            </div>
+          </div>
+        `;
+        studentList.innerHTML += card;
+      });
+    }
+
+    function showError() {
+      studentList.innerHTML = `<p class="text-danger">Failed to load student data.</p>`;
+    }
+
+    applyFiltersBtn.addEventListener("click", () => {
+      const id = idFilter.value.trim();
+      const year = yearFilter.value;
+      const branch = branchFilter.value;
+      const name = nameFilter.value.trim();
+
+      if (id !== "") {
+        searchById(id);
+      } else if (name !== "") {
+        searchByName(name);
+      } else if (year !== "") {
+        searchByYear(year);
+      } else if (branch !== "") {
+        searchByBranch(branch);
+      } else {
+        loadAllStudents();
+      }
+    });
+
+    resetFiltersBtn.addEventListener("click", () => {
+      idFilter.value = "";
+      yearFilter.value = "";
+      nameFilter.value = "";
+      branchFilter.value = "";
+      loadAllStudents();
+    });
+
+    loadAllStudents();
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
