@@ -172,7 +172,7 @@ public class AdministratorService {
 		// Check if student profile exists
 		StudentProfile existing = dao.findStdById(userId);
 		if (existing == null) {
-			throw new RuntimeException("StudentProfile not found for update");
+			throw new RuntimeException("User not found for update");
 		}
 
 		// Load user and department
@@ -239,7 +239,7 @@ public class AdministratorService {
 		ResponseEntity re = ResponseEntity.status(HttpStatus.OK.value()).body(rs);
 		return re;
 	}
-
+ 
 	public ResponseEntity<ResponseStructure<List<StudentProfile>>> findByYear(String year) {
 		List<StudentProfile> el = dao.findByYear(year);
 		ResponseStructure st = ResponseStructure.builder().status(HttpStatus.OK.value())

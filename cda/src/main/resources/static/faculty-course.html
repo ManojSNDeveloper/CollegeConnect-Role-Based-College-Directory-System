@@ -232,7 +232,7 @@
 	    fetch(`http://localhost:8080/courses/delete/${courseId}`, {
 	      method: "DELETE"
 	    })
-	      .then(res => {
+	      .then(res => { 
 	        if (res.ok) {
 	          alert("Course deleted successfully.");
 	          location.reload();
