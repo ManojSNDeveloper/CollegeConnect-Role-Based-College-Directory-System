@@ -11,6 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class PageController 
 {
  
+	@GetMapping("/")
+	public String home() {
+	    return "forward:/index.html"; // Or change to any welcome page
+	}
+	
     @GetMapping("/admin-course")
     public String adminCourse() {
         return "forward:/admin-course.html";
