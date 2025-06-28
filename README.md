@@ -63,9 +63,7 @@ App runs at:
 ## 📘 Swagger API Documentation
 Swagger UI available at:
 ➡️ http://localhost:8080/swagger-ui.html
-or
-➡️ http://localhost:8080/swagger-ui/ (springdoc-ui version)
-
+ 
 Use it to test APIs like:
 GET /api/departments
 POST /api/faculty
