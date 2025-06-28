@@ -69,6 +69,27 @@ GET /api/departments
 POST /api/faculty
 GET /api/students/{id}
 
+## 👨‍💼 Admin Login (Role: ADMIN)
+Username: admin1
+Password: adminPass1
+
+Username: admin2
+Password: adminPass2
+
+## 👩‍🏫 Faculty Login (Role: FACULTY)
+Username: faculty1
+Password: facultyPass1
+
+Username: faculty2
+Password: facultyPass2
+
+## 👨‍🎓 Student Login (Role: STUDENT)
+Username: student1
+Password: studentPass1
+
+Username: student2
+Password: studentPass2
+
 ## 👨‍💻 Author
 Manoj S N
 Java Full Stack Developer
